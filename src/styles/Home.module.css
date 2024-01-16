@@ -54,8 +54,8 @@
   grid-template-rows: 1fr 2fr 2fr 1fr;
   grid-template-areas: 
     "header header header"
-    "content content content"
-    "history history history"
+    "sidebar content content"
+    "sidebar history history"
     "footer footer footer";
   min-height: 100vh;
 }

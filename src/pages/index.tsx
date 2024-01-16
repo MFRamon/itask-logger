@@ -44,7 +44,7 @@ import {
 } from '@mui/x-data-grid-generator';
 import { Task } from '@mui/icons-material';
 
-const roles = ['Market', 'Finance', 'Development'];
+const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART' ];
 
 const randomRole = () => {
   return randomArrayItem(roles);
@@ -179,9 +179,9 @@ export default function Home() {
       field: 'status',
       headerName: 'Status',
       width: 220,
-      editable: true,
+      editable: false,
       type: 'singleSelect',
-      valueOptions: ['Market', 'Finance', 'Development'],
+      valueOptions: ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART'],
     },
     {
       field: 'actions',
@@ -235,6 +235,39 @@ export default function Home() {
     const modifiedTasks = rows.map(task => {
       if (task.id === selectedTask?.id) {
           return { ...task, status: "IN-PROGRESS" };
+      }
+      return task;
+    });
+
+    setRows(modifiedTasks);
+  }
+
+  const onHandleStopTask = () => {
+    const modifiedTasks = rows.map(task => {
+      if (task.id === selectedTask?.id) {
+          return { ...task, status: "STOPPED" };
+      }
+      return task;
+    });
+
+    setRows(modifiedTasks);
+  }
+
+  const onHandleFinishTask = () => {
+    const modifiedTasks = rows.map(task => {
+      if (task.id === selectedTask?.id) {
+          return { ...task, status: "FINISHED" };
+      }
+      return task;
+    });
+
+    setRows(modifiedTasks);
+  }
+
+  const onHandleRestartTask = () => {
+    const modifiedTasks = rows.map(task => {
+      if (task.id === selectedTask?.id) {
+          return { ...task, status: "PENDING" };
       }
       return task;
     });
@@ -375,6 +408,12 @@ export default function Home() {
             </List>
           </Stack>
         </div> */}
+        <div className={styles.sidebar}>
+          <Button fullWidth variant="outlined" onClick={onHandleStartTask}>Start Task</Button>
+          <Button fullWidth variant="outlined" onClick={onHandleStopTask}>Stop Task</Button>
+          <Button fullWidth variant="outlined" onClick={onHandleFinishTask}>Finish Task</Button>
+          <Button fullWidth variant="outlined" onClick={onHandleRestartTask}>Restart Task</Button>
+        </div>
 
         {/* Content */}
         <div className={styles.content}>
@@ -407,12 +446,10 @@ export default function Home() {
                   toolbar: { setRows, setRowModesModel },
                 }}
               />
-              <Button variant="outlined" onClick={onHandleStartTask}>Start Task</Button>
-              <Button variant="outlined" onClick={onHandleStartTask}>Stop Task</Button>
-              <Button variant="outlined" onClick={onHandleStartTask}>Finish Task</Button>
-              <Button variant="outlined" onClick={onHandleStartTask}>Restart Task</Button>
+              
             </Box>       
           </Stack>
+
         </div>  
 
         {/* History */}
