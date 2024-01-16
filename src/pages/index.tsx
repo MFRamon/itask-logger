@@ -8,7 +8,6 @@ import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
@@ -16,18 +15,232 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Close';
+import {
+  GridRowsProp,
+  GridRowModesModel,
+  GridRowModes,
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridEventListener,
+  GridRowId,
+  GridRowModel,
+  GridRowEditStopReasons,
+  GridToolbarFilterButton,
+} from '@mui/x-data-grid';
+import {
+  randomCreatedDate,
+  randomTraderName,
+  randomId,
+  randomArrayItem,
+} from '@mui/x-data-grid-generator';
+import { Task } from '@mui/icons-material';
 
+const roles = ['Market', 'Finance', 'Development'];
 
+const randomRole = () => {
+  return randomArrayItem(roles);
+};
+
+interface Task{
+  id: string;
+  description: string;
+  duration: string;
+  status: string; 
+} 
+
+const initialRows: GridRowsProp = [
+  {
+    id: randomId(),
+    description: randomTraderName(),
+    duration: 25,
+    status: randomRole(),
+  },
+  {
+    id: randomId(),
+    description: randomTraderName(),
+    duration: 36,
+    status: randomRole(),
+  },
+];
+
+interface EditToolbarProps {
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (
+    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
+  ) => void;
+}
+
+function EditToolbar(props: EditToolbarProps) {
+  const { setRows, setRowModesModel } = props;
+
+  const handleClick = () => {
+    const id = randomId();
+    setRows((oldRows) => [...oldRows, { id, description: '', duration: '', isNew: true }]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'description' },
+    }));
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
+        Add record
+      </Button>
+    </GridToolbarContainer>
+  );
+}
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [age, setAge] = React.useState('');
+  const [rows, setRows] = React.useState(initialRows);
+  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+  const [selectedTask, setSelectedTask] = React.useState<Task>();
+
+  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
+      event.defaultMuiPrevented = true;
+    }
   };
+
+  const handleEditClick = (id: GridRowId) => () => {
+    console.log({...rowModesModel});
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
+  };
+
+  const handleSaveClick = (id: GridRowId) => () => {
+    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
+  };
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    setRows(rows.filter((row) => row.id !== id));
+  };
+
+  const handleCancelClick = (id: GridRowId) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
+
+    const editedRow = rows.find((row) => row.id === id);
+    if (editedRow!.isNew) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
+  };
+
+  const processRowUpdate = (newRow: GridRowModel) => {
+    console.log(newRow);
+    console.log("Termino el update");
+    const updatedRow = { ...newRow, isNew: false };
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    return updatedRow;
+  };
+
+  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+    setRowModesModel(newRowModesModel);
+  };
+
+  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
+    console.log(params.row);
+    setSelectedTask({id: params.row.id,description: params.row.description, duration: params.row.duration, status:params.row.status });
+    console.log(selectedTask);
+  };
+
+  const columns: GridColDef[] = [
+    { field: 'description', headerName: 'Description', width: 180, editable: true },
+    {
+      field: 'duration',
+      headerName: 'Duration',
+      type: 'number',
+      width: 80,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+    // {
+    //   field: 'joinDate',
+    //   headerName: 'Join date',
+    //   type: 'date',
+    //   width: 180,
+    //   editable: true,
+    // },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 220,
+      editable: true,
+      type: 'singleSelect',
+      valueOptions: ['Market', 'Finance', 'Development'],
+    },
+    {
+      field: 'actions',
+      type: 'actions',
+      headerName: 'Actions',
+      width: 100,
+      cellClassName: 'actions',
+      getActions: ({ id }) => {
+        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
+
+        if (isInEditMode) {
+          return [
+            <GridActionsCellItem
+              icon={<SaveIcon />}
+              label="Save"
+              sx={{
+                color: 'primary.main',
+              }}
+              onClick={handleSaveClick(id)}
+            />,
+            <GridActionsCellItem
+              icon={<CancelIcon />}
+              label="Cancel"
+              className="textPrimary"
+              onClick={handleCancelClick(id)}
+              color="inherit"
+            />,
+          ];
+        }
+
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            className="textPrimary"
+            onClick={handleEditClick(id)}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={handleDeleteClick(id)}
+            color="inherit"
+          />,
+        ];
+      },
+    },
+  ];
+
+  const onHandleStartTask = () => {
+    const modifiedTasks = rows.map(task => {
+      if (task.id === selectedTask?.id) {
+          return { ...task, status: "IN-PROGRESS" };
+      }
+      return task;
+    });
+
+    setRows(modifiedTasks);
+  }
 
   return (
     <>
@@ -42,7 +255,6 @@ export default function Home() {
         />
       </Head>
       <main className={styles.main}>
-
         <div className={styles.header}>
           <div className={styles.center}>
             <Image
@@ -57,7 +269,7 @@ export default function Home() {
         </div>
         
         {/* Sidebar */}
-        <div className={styles.sidebar}>
+        {/* <div className={styles.sidebar}>
           <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
             <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
             <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
@@ -75,7 +287,6 @@ export default function Home() {
             </Select>
             <Button variant="contained" fullWidth size="large">Contained</Button>
 
-            {/* Add Paper Component */}
             <Typography variant="h3" gutterBottom>
               Pending Tasks
             </Typography>
@@ -163,35 +374,49 @@ export default function Home() {
               </ListItem>
             </List>
           </Stack>
-        </div>
+        </div> */}
 
         {/* Content */}
         <div className={styles.content}>
         <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={''}
-              label="Age"
-              onChange={handleChange}
-              fullWidth
+            <Box
+              sx={{
+                height: 500,
+                width: '100%',
+                '& .actions': {
+                  color: 'text.secondary',
+                },
+                '& .textPrimary': {
+                  color: 'text.primary',
+                },
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-            <Button variant="contained" fullWidth size="large">Contained</Button>    
-            <Button variant="contained" fullWidth size="large">Contained</Button>    
-            <Button variant="contained" fullWidth size="large">Contained</Button>    
-            <Button variant="contained" fullWidth size="large">Contained</Button>        
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                editMode="row"
+                rowModesModel={rowModesModel}
+                onRowModesModelChange={handleRowModesModelChange}
+                onRowEditStop={handleRowEditStop}
+                onRowClick={handleRowClick}
+                processRowUpdate={processRowUpdate}
+                slots={{
+                  toolbar: EditToolbar,
+                }}
+                slotProps={{
+                  toolbar: { setRows, setRowModesModel },
+                }}
+              />
+              <Button variant="outlined" onClick={onHandleStartTask}>Start Task</Button>
+              <Button variant="outlined" onClick={onHandleStartTask}>Stop Task</Button>
+              <Button variant="outlined" onClick={onHandleStartTask}>Finish Task</Button>
+              <Button variant="outlined" onClick={onHandleStartTask}>Restart Task</Button>
+            </Box>       
           </Stack>
         </div>  
 
         {/* History */}
-        <div className={styles.history}>
-          {/* Add Paper Component */}
+        {/* <div className={styles.history}>
           <Typography variant="h3" gutterBottom>
             Finished Tasks
           </Typography>
@@ -263,12 +488,11 @@ export default function Home() {
               />
             </ListItem>
           </List>
-        </div>  
+        </div>   */}
 
         {/* Footer */}
-        <div className={styles.footer}>
-
-        </div>  
+        {/* <div className={styles.footer}>
+        </div>   */}
       </main>
     </>
   )
