@@ -48,6 +48,7 @@ import Paper from '@mui/material/Paper';
 import CompletedTasksTable from '@/components/CompletedTasksTable/CompletedTasksTable';
 import MetaHead from '@/components/MetaHead/MetaHead';
 import LogoHeader from '@/components/LogoHeader/LogoHeader';
+import LogoSubheader from '@/components/LogoSubheader/LogoSubheader';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -315,12 +316,7 @@ export default function Home() {
         </div>
 
         <div className={styles.top}>
-          <Typography variant="h1">
-            Arkon Data
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            This is a take home Challenge for a vacant as a software engineer
-          </Typography>
+          <LogoSubheader></LogoSubheader>
         </div>
         
         <div className={styles.sidebar}>
