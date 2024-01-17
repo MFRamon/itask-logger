@@ -46,7 +46,8 @@ import {
 import { Task } from '@mui/icons-material';
 import Paper from '@mui/material/Paper';
 import CompletedTasksTable from '@/components/CompletedTasksTable/CompletedTasksTable';
-import PageHead from '@/components/PageHead/PageHead';
+import MetaHead from '@/components/MetaHead/MetaHead';
+import LogoHeader from '@/components/LogoHeader/LogoHeader';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -307,17 +308,10 @@ export default function Home() {
 
   return (
     <>
-      <PageHead titleText='Arkon Tasks Dashboard'></PageHead>
+      <MetaHead title={'Arkon Tasks Dashboard'}></MetaHead>
       <main className={styles.main}>
         <div className={styles.header}>
-          <Image
-            className={styles.logo}
-            src="/memoji.svg"
-            alt="Next.js Logo"
-            width={200}
-            height={200}
-            priority
-          />
+          <LogoHeader></LogoHeader>
         </div>
 
         <div className={styles.top}>
@@ -368,7 +362,6 @@ export default function Home() {
                       toolbar: { setRows, setRowModesModel },
                     }}
                   />
-                  
                 </Box>       
             </Stack>
           </Paper>
