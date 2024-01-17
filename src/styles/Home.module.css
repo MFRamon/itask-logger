@@ -19,9 +19,9 @@
   grid-template-rows: 0.50fr 0.25fr 2fr 2fr 1fr;
   grid-template-areas: 
     "header header header"
-    "top top top"
-    "sidebar content content"
-    "sidebar history history"
+    "top top ."
+    "content content sidebar"
+    "history history sidebar"
     "footer footer footer";
   min-height: 100vh;
 }
@@ -54,7 +54,7 @@
 }
 
 .history{
-  background-color: yellow;
+  /* background-color: yellow; */
   grid-area: history;
 }
 

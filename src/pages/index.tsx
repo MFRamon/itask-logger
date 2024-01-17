@@ -45,7 +45,7 @@ import {
 import { Task } from '@mui/icons-material';
 import Paper from '@mui/material/Paper';
 
-const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART' ];
+const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
 const randomRole = () => {
   return randomArrayItem(roles);
@@ -101,13 +101,15 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
+const isTaskFinished = (task:any) => task.status === 'FINISHED'
 
 export default function Home() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
 
   const [selectedTask, setSelectedTask] = React.useState<Task>();
+  const [finishedTaks, setFinishedTasks] = React.useState(rows.filter((task => task.status === 'FINISHED' )));
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -144,7 +146,7 @@ export default function Home() {
     console.log(newRow);
     console.log("Termino el update");
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));    
     return updatedRow;
   };
 
@@ -153,9 +155,7 @@ export default function Home() {
   };
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    console.log(params.row);
     setSelectedTask({id: params.row.id,description: params.row.description, duration: params.row.duration, status:params.row.status });
-    console.log(selectedTask);
   };
 
   const columns: GridColDef[] = [
@@ -169,18 +169,11 @@ export default function Home() {
       headerAlign: 'left',
       editable: true,
     },
-    // {
-    //   field: 'joinDate',
-    //   headerName: 'Join date',
-    //   type: 'date',
-    //   width: 180,
-    //   editable: true,
-    // },
     {
       field: 'status',
       headerName: 'Status',
       width: 220,
-      editable: false,
+      editable: true,
       type: 'singleSelect',
       valueOptions: ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART'],
     },
@@ -232,6 +225,27 @@ export default function Home() {
     },
   ];
 
+  const columnsView: GridColDef[] = [
+    { field: 'description', headerName: 'Description', width: 180, editable: true },
+    {
+      field: 'duration',
+      headerName: 'Duration',
+      type: 'number',
+      width: 80,
+      align: 'left',
+      headerAlign: 'left',
+      editable: true,
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 220,
+      editable: false,
+      type: 'singleSelect',
+      valueOptions: ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART'],
+    }
+  ];
+
   const onHandleStartTask = () => {
     const modifiedTasks = rows.map(task => {
       if (task.id === selectedTask?.id) {
@@ -241,7 +255,9 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
   }
+  
 
   const onHandleStopTask = () => {
     const modifiedTasks = rows.map(task => {
@@ -252,6 +268,7 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
   }
 
   const onHandleFinishTask = () => {
@@ -263,6 +280,7 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
   }
 
   const onHandleRestartTask = () => {
@@ -274,6 +292,11 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
+  }
+
+  const onTimerUpdate = () => {
+    
   }
 
   return (
@@ -298,9 +321,6 @@ export default function Home() {
             height={200}
             priority
           />
-          {/* <Typography variant="h1" gutterBottom>
-            h1. Heading
-          </Typography> */}
         </div>
 
         <div className={styles.top}>
@@ -357,83 +377,20 @@ export default function Home() {
           </Paper>
         </div>  
 
-        {/* History */}
         <div className={styles.history}>
           <Typography variant="h3" gutterBottom>
             Finished Tasks
           </Typography>
 
           <Paper>
-            
+            <DataGrid
+              sx={{
+                height: 500,
+              }}
+              rows={finishedTaks}
+              columns={columnsView}
+            />
           </Paper>
-          
-          {/* <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Brunch this weekend?"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: 'inline' }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Ali Connors
-                    </Typography>
-                    {" — I'll be in your neighborhood doing errands this…"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Summer BBQ"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: 'inline' }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      to Scott, Alex, Jennifer
-                    </Typography>
-                    {" — Wish I could come, but I'm out of town this…"}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-              </ListItemAvatar>
-              <ListItemText
-                primary="Oui Oui"
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      sx={{ display: 'inline' }}
-                      component="span"
-                      variant="body2"
-                      color="text.primary"
-                    >
-                      Sandra Adams
-                    </Typography>
-                    {' — Do you have Paris recommendations? Have you ever…'}
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-          </List> */}
         </div>  
 
         {/* Footer */}
