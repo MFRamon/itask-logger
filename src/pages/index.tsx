@@ -43,6 +43,7 @@ import {
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
 import { Task } from '@mui/icons-material';
+import Paper from '@mui/material/Paper';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART' ];
 
@@ -289,125 +290,28 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.header}>
-          <div className={styles.center}>
-            <Image
-              className={styles.logo}
-              src="/next.svg"
-              alt="Next.js Logo"
-              width={180}
-              height={37}
-              priority
-            />
-          </div>
+          <Image
+            className={styles.logo}
+            src="/memoji.svg"
+            alt="Next.js Logo"
+            width={200}
+            height={200}
+            priority
+          />
+          {/* <Typography variant="h1" gutterBottom>
+            h1. Heading
+          </Typography> */}
+        </div>
+
+        <div className={styles.top}>
+          <Typography variant="h1">
+            Arkon Data
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            This is a take home Challenge for a vacant as a software engineer
+          </Typography>
         </div>
         
-        {/* Sidebar */}
-        {/* <div className={styles.sidebar}>
-          <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
-            <TextField id="outlined-basic" label="Outlined" variant="outlined" fullWidth />
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={''}
-              label="Age"
-              onChange={handleChange}
-              fullWidth
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-            <Button variant="contained" fullWidth size="large">Contained</Button>
-
-            <Typography variant="h3" gutterBottom>
-              Pending Tasks
-            </Typography>
-
-            <Typography variant="h5" gutterBottom>
-              Filters
-            </Typography>
-
-            <Stack>
-              <Chip label="Clickable Link" component="a" href="#basic-chip" clickable />
-              <Chip
-                label="Clickable Link"
-                component="a"
-                href="#basic-chip"
-                variant="outlined"
-                clickable
-              />
-            </Stack>
-
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Brunch this weekend?"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        Ali Connors
-                      </Typography>
-                      {" — I'll be in your neighborhood doing errands this…"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Summer BBQ"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        to Scott, Alex, Jennifer
-                      </Typography>
-                      {" — Wish I could come, but I'm out of town this…"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Oui Oui"
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        Sandra Adams
-                      </Typography>
-                      {' — Do you have Paris recommendations? Have you ever…'}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </List>
-          </Stack>
-        </div> */}
         <div className={styles.sidebar}>
           <Button fullWidth variant="outlined" onClick={onHandleStartTask}>Start Task</Button>
           <Button fullWidth variant="outlined" onClick={onHandleStopTask}>Stop Task</Button>
@@ -417,48 +321,53 @@ export default function Home() {
 
         {/* Content */}
         <div className={styles.content}>
-        <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
-            <Box
-              sx={{
-                height: 500,
-                width: '100%',
-                '& .actions': {
-                  color: 'text.secondary',
-                },
-                '& .textPrimary': {
-                  color: 'text.primary',
-                },
-              }}
-            >
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                editMode="row"
-                rowModesModel={rowModesModel}
-                onRowModesModelChange={handleRowModesModelChange}
-                onRowEditStop={handleRowEditStop}
-                onRowClick={handleRowClick}
-                processRowUpdate={processRowUpdate}
-                slots={{
-                  toolbar: EditToolbar,
-                }}
-                slotProps={{
-                  toolbar: { setRows, setRowModesModel },
-                }}
-              />
-              
-            </Box>       
-          </Stack>
-
+          <Paper elevation={3}>
+            <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
+                <Box
+                  sx={{
+                    height: 500,
+                    width: '100%',
+                    '& .actions': {
+                      color: 'text.secondary',
+                    },
+                    '& .textPrimary': {
+                      color: 'text.primary',
+                    },
+                  }}
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    editMode="row"
+                    rowModesModel={rowModesModel}
+                    onRowModesModelChange={handleRowModesModelChange}
+                    onRowEditStop={handleRowEditStop}
+                    onRowClick={handleRowClick}
+                    processRowUpdate={processRowUpdate}
+                    slots={{
+                      toolbar: EditToolbar,
+                    }}
+                    slotProps={{
+                      toolbar: { setRows, setRowModesModel },
+                    }}
+                  />
+                  
+                </Box>       
+            </Stack>
+          </Paper>
         </div>  
 
         {/* History */}
-        {/* <div className={styles.history}>
+        <div className={styles.history}>
           <Typography variant="h3" gutterBottom>
             Finished Tasks
           </Typography>
+
+          <Paper>
+            
+          </Paper>
           
-          <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          {/* <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
@@ -524,8 +433,8 @@ export default function Home() {
                 }
               />
             </ListItem>
-          </List>
-        </div>   */}
+          </List> */}
+        </div>  
 
         {/* Footer */}
         {/* <div className={styles.footer}>
