@@ -33,9 +33,9 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
       <React.Fragment>
         <Card sx={{ minWidth: 275, minHeight: 500 }} className={styles.cardContainer}>
           <CardContent sx={{padding:'0px'}}>
-            <Grid container spacing={2} direction={"column"}>
+            <Grid container spacing={2} direction={"column"} justifyContent={"center"} alignItems={"center"}>
               {/* Header for container */}
-              <Grid item id={"finished-tasks-title"}>
+              <Grid item id={"finished-tasks-title"} alignSelf={'flex-start'}>
                 <Typography variant="h5">
                     Finished Tasks
                 </Typography>
@@ -76,7 +76,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
 
               {/* Finished Tasks List */}
               <Grid item>
-                <List sx={{ width: '100%', maxWidth: 360, overflow: 'auto', maxHeight: 200, }}> 
+                <List sx={{ width: '400px', overflow: 'auto', maxHeight: 200, backgroundColor: "green" }}> 
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -97,6 +97,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
+                    <Divider/>
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -117,6 +118,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
+                    <Divider/>
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -137,6 +139,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
+                    <Divider/>
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -157,6 +160,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
+                    <Divider/>
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -177,6 +181,28 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
+                    <Divider/>
+                    <ListItem alignItems="flex-start">
+                      <Grid container flexDirection={"column"} justifyContent={"space-between"}>
+                        <Grid item>
+                          <ListItemText
+                            primary="Brunch this weekend?"
+                          />
+                          <ListItemText
+                            primary="40Mins"
+                          />
+                        </Grid>                    
+                      </Grid>
+
+                      <Grid item>
+                        <Grid container flexDirection={"row"}>
+                          <ListItemText
+                            primary="20Mins"
+                          />
+                        </Grid>
+                      </Grid>    
+                    </ListItem> 
+                    <Divider/>
                     <ListItem alignItems="flex-start">
                       <Grid container flexDirection={"column"} justifyContent={"space-between"}>
                         <Grid item>
@@ -197,27 +223,7 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
-                    <ListItem alignItems="flex-start">
-                      <Grid container flexDirection={"column"} justifyContent={"space-between"}>
-                        <Grid item>
-                          <ListItemText
-                            primary="Brunch this weekend?"
-                          />
-                          <ListItemText
-                            primary="40Mins"
-                          />
-                        </Grid>                    
-                      </Grid>
-
-                      <Grid item>
-                        <Grid container flexDirection={"row"}>
-                          <ListItemText
-                            primary="20Mins"
-                          />
-                        </Grid>
-                      </Grid>    
-                    </ListItem>  
-                    <Divider variant="inset" component="li" />
+                    <Divider/>
                 </List>
               </Grid>
             </Grid>
