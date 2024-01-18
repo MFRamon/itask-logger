@@ -50,6 +50,7 @@ import MetaHead from '@/components/MetaHead/MetaHead';
 import LogoHeader from '@/components/LogoHeader/LogoHeader';
 import LogoSubheader from '@/components/LogoSubheader/LogoSubheader';
 import TasksActions from '@/components/TasksActions/TasksActions';
+import { Grid } from '@mui/material';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -316,55 +317,52 @@ export default function Home() {
           <LogoHeader></LogoHeader>
         </div>
 
-        <div className={styles.top}>
+        <div className={styles.subheader}>
           <LogoSubheader></LogoSubheader>
         </div>
         
         {/* Content */}
-        <div className={styles.content}>
-          <Paper elevation={3}>
-            <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
-                <Box
-                  sx={{
-                    height: 500,
-                    width: '100%',
-                    '& .actions': {
-                      color: 'text.secondary',
-                    },
-                    '& .textPrimary': {
-                      color: 'text.primary',
-                    },
-                  }}
-                >
-                  <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    editMode="row"
-                    rowModesModel={rowModesModel}
-                    onRowModesModelChange={handleRowModesModelChange}
-                    onRowEditStop={handleRowEditStop}
-                    onRowClick={handleRowClick}
-                    processRowUpdate={processRowUpdate}
-                    slots={{
-                      toolbar: EditToolbar,
-                      footer: TasksActions
+        <Grid container spacing={2} className={styles.content}>
+          <Grid item lg={6}>
+            <Paper elevation={3}>
+              <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
+                  <Box
+                    sx={{
+                      height: 500,
+                      width: '100%',
+                      '& .actions': {
+                        color: 'text.secondary',
+                      },
+                      '& .textPrimary': {
+                        color: 'text.primary',
+                      },
                     }}
-                    slotProps={{
-                      toolbar: { setRows, setRowModesModel },
-                    }}
-                  />
-                </Box>       
-            </Stack>
-          </Paper>
-        </div>  
-
-        <div className={styles.history}>
-          <CompletedTasksTable completedTasks={finishedTaks} columns={columnsView}></CompletedTasksTable>
-        </div>  
-
-        {/* Footer */}
-        {/* <div className={styles.footer}>
-        </div>   */}
+                  >
+                    <DataGrid
+                      rows={rows}
+                      columns={columns}
+                      editMode="row"
+                      rowModesModel={rowModesModel}
+                      onRowModesModelChange={handleRowModesModelChange}
+                      onRowEditStop={handleRowEditStop}
+                      onRowClick={handleRowClick}
+                      processRowUpdate={processRowUpdate}
+                      slots={{
+                        toolbar: EditToolbar,
+                        footer: TasksActions
+                      }}
+                      slotProps={{
+                        toolbar: { setRows, setRowModesModel },
+                      }}
+                    />
+                  </Box>       
+              </Stack>
+            </Paper>
+          </Grid>
+          <Grid item lg={6}>
+            <CompletedTasksTable completedTasks={finishedTaks} columns={columnsView}></CompletedTasksTable>
+          </Grid>
+        </Grid>
       </main>
     </>
   )
