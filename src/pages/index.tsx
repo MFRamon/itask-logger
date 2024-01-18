@@ -323,7 +323,7 @@ export default function Home() {
         
         {/* Content */}
         <Grid container spacing={2} className={styles.content}>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6}>
             <Paper elevation={3}>
               <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
                   <Box
@@ -359,7 +359,7 @@ export default function Home() {
               </Stack>
             </Paper>
           </Grid>
-          <Grid item lg={6}>
+          <Grid item lg={6} md={6}>
             <CompletedTasksTable completedTasks={finishedTaks} columns={columnsView}></CompletedTasksTable>
           </Grid>
         </Grid>

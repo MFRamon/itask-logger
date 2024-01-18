@@ -18,7 +18,6 @@ export default function TasksActions(props: ITasksActionsProps) {
           <Button fullWidth variant="outlined" onClick={() => {}}>Finish Task</Button>
           <Button fullWidth variant="outlined" onClick={() => {}}>Restart Task</Button>
         </Stack>
-        
       </React.Fragment>
     )
 }
