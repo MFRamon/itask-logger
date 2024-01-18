@@ -49,6 +49,7 @@ import CompletedTasksTable from '@/components/CompletedTasksTable/CompletedTasks
 import MetaHead from '@/components/MetaHead/MetaHead';
 import LogoHeader from '@/components/LogoHeader/LogoHeader';
 import LogoSubheader from '@/components/LogoSubheader/LogoSubheader';
+import TasksActions from '@/components/TasksActions/TasksActions';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -319,13 +320,6 @@ export default function Home() {
           <LogoSubheader></LogoSubheader>
         </div>
         
-        <div className={styles.sidebar}>
-          <Button fullWidth variant="outlined" onClick={onHandleStartTask}>Start Task</Button>
-          <Button fullWidth variant="outlined" onClick={onHandleStopTask}>Stop Task</Button>
-          <Button fullWidth variant="outlined" onClick={onHandleFinishTask}>Finish Task</Button>
-          <Button fullWidth variant="outlined" onClick={onHandleRestartTask}>Restart Task</Button>
-        </div>
-
         {/* Content */}
         <div className={styles.content}>
           <Paper elevation={3}>
@@ -353,6 +347,7 @@ export default function Home() {
                     processRowUpdate={processRowUpdate}
                     slots={{
                       toolbar: EditToolbar,
+                      footer: TasksActions
                     }}
                     slotProps={{
                       toolbar: { setRows, setRowModesModel },
