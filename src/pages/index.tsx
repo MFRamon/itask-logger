@@ -359,7 +359,7 @@ export default function Home() {
               </Stack>
             </Paper>
           </Grid>
-          <Grid item lg={6} md={6}>
+          <Grid item lg={6} md={6} sx={{ padding: '0px'}}>
             <CompletedTasksTable completedTasks={finishedTaks} columns={columnsView}></CompletedTasksTable>
           </Grid>
         </Grid>

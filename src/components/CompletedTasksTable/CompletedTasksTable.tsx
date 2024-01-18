@@ -32,11 +32,11 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
     return (
       <React.Fragment>
         <Card sx={{ minWidth: 275, minHeight: 500 }} className={styles.cardContainer}>
-          <CardContent >
+          <CardContent sx={{padding:'0px'}}>
             <Grid container spacing={2} direction={"column"}>
               {/* Header for container */}
-              <Grid item>
-                <Typography variant="h6">
+              <Grid item id={"finished-tasks-title"}>
+                <Typography variant="h5">
                     Finished Tasks
                 </Typography>
               </Grid>
@@ -71,8 +71,6 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                       height={200}
                     />
                   </Grid>
-                  
-                 
                 </Paper>
               </Grid>
 
@@ -219,11 +217,9 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
                         </Grid>
                       </Grid>    
                     </ListItem>  
-
                     <Divider variant="inset" component="li" />
                 </List>
               </Grid>
-
             </Grid>
           </CardContent>
         </Card>
