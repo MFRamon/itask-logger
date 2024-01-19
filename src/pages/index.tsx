@@ -230,6 +230,7 @@ export default function Home() {
                 color: "primary.main",
               }}
               onClick={handleSaveClick(id)}
+              key={randomId()}
             />,
             <GridActionsCellItem
               icon={<CancelIcon />}
@@ -237,6 +238,7 @@ export default function Home() {
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
+              key={randomId()}
             />,
           ];
         }
@@ -248,12 +250,14 @@ export default function Home() {
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
+            key={randomId()}
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
             color="inherit"
+            key={randomId()}
           />,
         ];
       },
@@ -325,6 +329,7 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    console.log(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };
 
@@ -337,6 +342,7 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
+    console.log(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };
 

@@ -21,6 +21,7 @@ interface ICompletedTasksTableProps {
 
 const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
   const { completedTasks, columns } = props;
+  console.log(completedTasks);
 
   return (
     <Fragment>
@@ -43,11 +44,7 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
 
             {/* Chart for Data */}
             <Grid item>
-              <Paper
-                id={"paper-containe-chart"}
-                elevation={2}
-                className={styles.chart}
-              >
+              <Paper id={"paper-containe-chart"} className={styles.chart}>
                 {/* Subheaders */}
                 <Grid container direction={"column"} alignItems="flex-start">
                   <Grid item>
@@ -84,139 +81,29 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
                   backgroundColor: "green",
                 }}
               >
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
+                {completedTasks.map((task, id) => (
+                  <>
+                    <ListItem alignItems="flex-start">
+                      <Grid
+                        container
+                        flexDirection={"column"}
+                        justifyContent={"space-between"}
+                      >
+                        <Grid item>
+                          <ListItemText primary={task.description} />
+                          <ListItemText primary={task.status} />
+                        </Grid>
+                      </Grid>
 
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
-                <ListItem alignItems="flex-start">
-                  <Grid
-                    container
-                    flexDirection={"column"}
-                    justifyContent={"space-between"}
-                  >
-                    <Grid item>
-                      <ListItemText primary="Brunch this weekend?" />
-                      <ListItemText primary="40Mins" />
-                    </Grid>
-                  </Grid>
-
-                  <Grid item>
-                    <Grid container flexDirection={"row"}>
-                      <ListItemText primary="20Mins" />
-                    </Grid>
-                  </Grid>
-                </ListItem>
-                <Divider />
+                      <Grid item>
+                        <Grid container flexDirection={"row"}>
+                          <ListItemText primary={task.duration} />
+                        </Grid>
+                      </Grid>
+                    </ListItem>
+                    <Divider />
+                  </>
+                ))}
               </List>
             </Grid>
           </Grid>
