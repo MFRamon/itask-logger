@@ -1,42 +1,28 @@
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    background: rgba(var(--card-rgb), 0.1);
-    border: 1px solid rgba(var(--card-border-rgb), 0.15);
-  }
-
-  .card:hover span {
-    transform: translateX(4px);
-  }
-}
-
-/* Styles */
 .main {
   display: grid;
   gap: 5px;
-  margin: 14px;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 0.50fr 0.25fr 2fr 2fr 1fr;
+  grid-template-rows: 0.50fr 0.25fr 2fr;
   grid-template-areas: 
     "header header header"
-    "top top ."
-    "content content sidebar"
-    "history history sidebar"
-    "footer footer footer";
+    "subheader subheader subheader"
+    "content content content";
   min-height: 100vh;
+  margin: 1.5rem;
+  padding: 1.5rem;
 }
 
-.top{
-  grid-area: top;
+.subheader{
+  grid-area: subheader;
   height: 200px;
 }
 
 .header{
+  /* background-color: blueviolet; */
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
-  /* background-color: blueviolet; */
   grid-area: header;
 }
 
@@ -44,7 +30,6 @@
   /* background-color: aqua; */
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
   grid-area: sidebar;
 }
 
@@ -63,6 +48,13 @@
   grid-area: footer;
 }
 
+.itemContainer{
+  padding: 18px;
+  border-radius: 12px;
+  max-height: 250px;
+  min-height: 105px;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .main{
@@ -70,19 +62,10 @@
     grid-template-rows: 10% 30% 30% 10%;
     grid-template-areas: 
     "header"
-    "sidebar"
-    "content"
-    "history"
-    "footer";
+    "subheader"
+    "content";
   }
 }
-
-/* Tablet and Smaller Desktop */
-/* @media (min-width: 701px) and (max-width: 1120px) {
-  .grid {
-    grid-template-columns: repeat(2, 50%);
-  }
-} */
 
 @media (prefers-color-scheme: dark) {
   .vercelLogo {
