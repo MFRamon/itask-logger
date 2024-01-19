@@ -71,25 +71,65 @@ const Timer = (props: any) => {
         className={styles.itemContainer}
         sx={{ height: "142px", minHeight: "142px" }}
       >
-        <Grid direction={"column"} sx={{ minHeight: "105px" }}>
-          <Typography variant="h6">Remaining Time:</Typography>
-          <Typography variant="body1">
-            {parseInt(minutes) < 10 ? "0" + minutes : minutes} :{" "}
-            {parseInt(seconds) < 10 ? "0" + seconds : seconds}
-            {" minutes"}
-          </Typography>
-          <Button onClick={handleTimerStart} variant="text">
-            Start
-          </Button>
-          <Button onClick={handleTimerPause} variant="text">
-            Pause
-          </Button>
-          <Button onClick={handleTimerFinish} variant="text">
-            Finish
-          </Button>
-          <Button onClick={handleTimerReset} variant="text">
-            Reset
-          </Button>
+        <Grid
+          container
+          direction={"column"}
+          sx={{ minHeight: "105px" }}
+          justifyContent={"space-between"}
+        >
+          <Grid item>
+            <Typography variant="h6">Remaining Time:</Typography>
+          </Grid>
+
+          <Grid item>
+            <Typography variant="body1" gutterBottom>
+              {parseInt(minutes) < 10 ? "0" + minutes : minutes} :{" "}
+              {parseInt(seconds) < 10 ? "0" + seconds : seconds}
+              {" minutes"}
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <Grid
+              container
+              direction={"row"}
+              justifyContent={"space-between"}
+              spacing={1}
+            >
+              <Button
+                onClick={handleTimerStart}
+                variant="outlined"
+                color="success"
+                size="small"
+              >
+                Start
+              </Button>
+              <Button
+                onClick={handleTimerPause}
+                variant="outlined"
+                color="info"
+                size="small"
+              >
+                Pause
+              </Button>
+              <Button
+                onClick={handleTimerFinish}
+                variant="outlined"
+                color="error"
+                size="small"
+              >
+                Finish
+              </Button>
+              <Button
+                onClick={handleTimerReset}
+                variant="outlined"
+                color="warning"
+                size="small"
+              >
+                Reset
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Paper>
     </Fragment>
