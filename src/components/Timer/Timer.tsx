@@ -4,14 +4,15 @@ import { Grid, Paper, Typography } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
 
 interface ITimerPropos{
-    duration: number;
+    // TODO: Remove this any
+    duration: any;
     handleStart: () => void;
     handlePause: () => void;
     handleFinish: () => void;
     handleReset: () => void;
 }
 
-const Timer = (props: ITimerPropos) => {
+const Timer = (props: any) => {
 
   const { duration, handleStart, handlePause, handleFinish, handleReset } = props;
 
@@ -49,7 +50,7 @@ const Timer = (props: ITimerPropos) => {
         // @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
         if (parseInt(seconds) === 0 && parseInt(minutes) !== 0) {
           setSeconds((seconds) => seconds + 59);
-          setMinutes((minutes) => minutes - 1);
+          setMinutes((minutes: number) => minutes - 1);
         // @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
         } else if (parseInt(seconds) === 0 && parseInt(minutes) === 0) {
         } else {

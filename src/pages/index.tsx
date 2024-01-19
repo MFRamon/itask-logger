@@ -61,7 +61,7 @@ const randomRole = () => {
 export interface Task{
   id: string;
   description: string;
-  duration: string;
+  duration: any;
   status: string; 
 } 
 
@@ -276,7 +276,6 @@ export default function Home() {
     setFinishedTasks(modifiedTasks.filter(isTaskFinished))
   }
   
-
   const onHandleStopTask = () => {
     const modifiedTasks = rows.map(task => {
       if (task.id === selectedTask?.id) {
@@ -324,10 +323,10 @@ export default function Home() {
         <div className={styles.subheader}>
           <Grid container spacing={2}>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-                <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
+              <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <Timer duration={10} handleStart={onHandleStartTask} handlePause={onHandleStopTask} handleReset={onHandleRestartTask} handleFinish={onHandleFinishTask}></Timer>
+              {selectedTask && <Timer duration={selectedTask?.duration} handleStart={onHandleStartTask} handlePause={onHandleStopTask} handleReset={onHandleRestartTask} handleFinish={onHandleFinishTask}></Timer>}
             </Grid>
 
             <Grid item lg={4} md={4} sm={12} xs={12}>
@@ -373,13 +372,11 @@ export default function Home() {
                       processRowUpdate={processRowUpdate}
                       slots={{
                         toolbar: EditToolbar,
-                        // footer: TasksActions
                       }}
                       slotProps={{
                         toolbar: { setRows, setRowModesModel },
                       }}
                     />
-                    {/* <TasksActions></TasksActions> */}
                   </Box>       
               </Stack>
             </Paper>
