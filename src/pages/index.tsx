@@ -362,7 +362,7 @@ export default function Home() {
             <Grid item lg={4} md={4} sm={12} xs={12}>
               {selectedTask && (
                 <Timer
-                  duration={selectedTask?.duration}
+                  duration={20}
                   handleStart={onHandleStartTask}
                   handlePause={onHandleStopTask}
                   handleReset={onHandleRestartTask}

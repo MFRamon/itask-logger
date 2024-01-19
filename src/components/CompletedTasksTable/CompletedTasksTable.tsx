@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
@@ -20,8 +20,16 @@ interface ICompletedTasksTableProps {
 }
 
 const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
+  const [domLoaded, setDomLoaded] = useState(false);
+
   const { completedTasks, columns } = props;
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
+
   console.log(completedTasks);
+
 
   return (
     <Fragment>
@@ -71,41 +79,44 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
               </Paper>
             </Grid>
 
-            {/* Finished Tasks List */}
-            <Grid item>
-              <List
-                sx={{
-                  width: "400px",
-                  overflow: "auto",
-                  maxHeight: 200,
-                  backgroundColor: "green",
-                }}
-              >
-                {completedTasks.map((task, id) => (
-                  <>
-                    <ListItem alignItems="flex-start">
-                      <Grid
-                        container
-                        flexDirection={"column"}
-                        justifyContent={"space-between"}
-                      >
-                        <Grid item>
-                          <ListItemText primary={task.description} />
-                          <ListItemText primary={task.status} />
+            {/* TODO: Check Hydration */}
+            {domLoaded && (
+                <Grid item>
+                <List
+                  sx={{
+                    width: "400px",
+                    overflow: "auto",
+                    maxHeight: 200,
+                  }}
+                >
+                  {completedTasks.map((task, id) => (
+                    <>
+                      <ListItem alignItems="flex-start">
+                        <Grid
+                          container
+                          flexDirection={"column"}
+                          justifyContent={"space-between"}
+                        >
+                          <Grid item>
+                            <ListItemText primary={task.description} />
+                            <ListItemText primary={task.status} />
+                          </Grid>
                         </Grid>
-                      </Grid>
 
-                      <Grid item>
-                        <Grid container flexDirection={"row"}>
-                          <ListItemText primary={task.duration} />
+                        <Grid item>
+                          <Grid container flexDirection={"row"}>
+                            <ListItemText primary={task.duration} />
+                          </Grid>
                         </Grid>
-                      </Grid>
-                    </ListItem>
-                    <Divider />
-                  </>
-                ))}
-              </List>
-            </Grid>
+                      </ListItem>
+                      <Divider />
+                    </>
+                  ))}
+                </List>
+              </Grid>
+            )}
+            
+            
           </Grid>
         </CardContent>
       </Card>
