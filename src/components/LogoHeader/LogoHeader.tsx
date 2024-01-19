@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from "react";
 import Image from 'next/image'
 import Typography from '@mui/material/Typography';
 import styles from '@/components/LogoHeader/LogoHeader.module.css'
@@ -9,10 +9,9 @@ interface ILogoHeaderProps {
 }
 
 
-export default function LogoHeader(props: ILogoHeaderProps) {  
-
+const LogoHeader = (props: ILogoHeaderProps) => {  
     return (
-      <>
+      <Fragment>
         <Image
           src="/memoji.svg"
           alt="Next.js Logo"
@@ -24,6 +23,8 @@ export default function LogoHeader(props: ILogoHeaderProps) {
         {/* <Typography variant="h6">
           Created By Ramon Manrique
         </Typography> */}
-      </>
+      </Fragment>
     )
 }
+
+export default LogoHeader

@@ -1,14 +1,12 @@
-import * as React from 'react';
+import React from "react";
 import Head from 'next/head'
-
 
 interface IMetaHeadProps {
     title?: string,
     children?: React.ReactNode
 }
 
-
-export default function MetaHead(props: IMetaHeadProps) {  
+const MetaHead = (props: IMetaHeadProps) => {  
     const { title, children } = props;
 
     return (
@@ -27,3 +25,5 @@ export default function MetaHead(props: IMetaHeadProps) {
       </>
     )
 }
+
+export default MetaHead;

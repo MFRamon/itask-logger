@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from "react"
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import {
@@ -11,14 +11,10 @@ import Grid from '@mui/material/Grid';
 import { LineChart } from '@mui/x-charts/LineChart';
 import styles from '@/components/CompletedTasksTable/CompletedTasksTable.module.css';
 
-// List
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-
 
 interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
@@ -26,11 +22,11 @@ interface ICompletedTasksTableProps {
   children?: React.ReactNode
 }
 
-export default function CompletedTasksTable(props: ICompletedTasksTableProps) {  
+const CompletedTasksTable = (props: ICompletedTasksTableProps) => {  
     const { completedTasks, columns } = props;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Card sx={{ minWidth: 275, minHeight: 500 }} className={styles.cardContainer}>
           <CardContent sx={{padding:'0px'}}>
             <Grid container spacing={2} direction={"column"} justifyContent={"center"} alignItems={"center"}>
@@ -229,7 +225,8 @@ export default function CompletedTasksTable(props: ICompletedTasksTableProps) {
             </Grid>
           </CardContent>
         </Card>
-      </React.Fragment>
+      </Fragment>
     )
 }
-  
+
+export default CompletedTasksTable;

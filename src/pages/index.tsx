@@ -1,20 +1,7 @@
-import * as React from 'react';
-import Head from 'next/head'
-import Image from 'next/image'
+import React, { useEffect, useState } from "react";
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Container from '@mui/material/Container';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
@@ -120,12 +107,12 @@ const inter = Inter({ subsets: ['latin'] });
 const isTaskFinished = (task:any) => task.status === 'FINISHED'
 
 export default function Home() {
-  const [rows, setRows] = React.useState(initialRows);
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-  const [selectedTask, setSelectedTask] = React.useState<Task>();
-  const [finishedTaks, setFinishedTasks] = React.useState(rows.filter((task => task.status === 'FINISHED' )));
+  const [rows, setRows] = useState(initialRows);
+  const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+  const [selectedTask, setSelectedTask] = useState<Task>();
+  const [finishedTaks, setFinishedTasks] = useState(rows.filter((task => task.status === 'FINISHED' )));
 
-  React.useEffect(() => {
+  useEffect(() => {
     const currentTask = rows.find(task => task.id === selectedTask?.id);
     setSelectedTask({id: currentTask?.id, description: currentTask?.description, duration: currentTask?.duration, status: currentTask?.status });
   }, [rows]);
