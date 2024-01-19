@@ -52,7 +52,7 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
 
             {/* Chart for Data */}
             <Grid item>
-              <Paper id={"paper-containe-chart"} className={styles.chart}>
+              <Paper id={"paper-containe-chart"} className={styles.chart} elevation={0}>
                 {/* Subheaders */}
                 <Grid container direction={"column"} alignItems="flex-start">
                   <Grid item>

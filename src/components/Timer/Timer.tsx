@@ -78,16 +78,16 @@ const Timer = (props: any) => {
             {parseInt(seconds) < 10 ? "0" + seconds : seconds}
             {" minutes"}
           </Typography>
-          <Button onClick={handleTimerStart} variant="outlined">
+          <Button onClick={handleTimerStart} variant="text">
             Start
           </Button>
-          <Button onClick={handleTimerPause} variant="outlined">
+          <Button onClick={handleTimerPause} variant="text">
             Pause
           </Button>
-          <Button onClick={handleTimerFinish} variant="outlined">
+          <Button onClick={handleTimerFinish} variant="text">
             Finish
           </Button>
-          <Button onClick={handleTimerReset} variant="outlined">
+          <Button onClick={handleTimerReset} variant="text">
             Reset
           </Button>
         </Grid>
