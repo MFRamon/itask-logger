@@ -12,8 +12,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import Chip from '@mui/material/Chip';
-
+import Chip from "@mui/material/Chip";
 
 import {
   randomCreatedDate,
@@ -84,7 +83,9 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
         >
           {/* Header for container */}
           <Grid item id={"finished-tasks-title"} alignSelf={"flex-start"}>
-            <Typography variant="h5" gutterBottom>Finished Tasks</Typography>
+            <Typography variant="h5" gutterBottom>
+              Finished Tasks
+            </Typography>
           </Grid>
 
           {/* Chart for Data */}
@@ -113,7 +114,15 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
 
           {/* TODO: Check Hydration */}
           {domLoaded && (
-            <Grid item sx={{ width: '100%', minHeight: '150px', maxHeight: '150px', height: '150px'}}>
+            <Grid
+              item
+              sx={{
+                width: "100%",
+                minHeight: "150px",
+                maxHeight: "150px",
+                height: "150px",
+              }}
+            >
               <List
                 sx={{
                   overflow: "auto",
@@ -127,16 +136,20 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
                         container
                         flexDirection={"column"}
                         justifyContent={"space-between"}
+                        sx={{ width: "80%" }}
                       >
                         <Grid item>
                           <ListItemText primary={task.description} />
-                          <Chip sx={{ borderRadius: '8px'}} label={task.status} />
+                          <Chip
+                            sx={{ borderRadius: "8px" }}
+                            label={task.status}
+                          />
                         </Grid>
                       </Grid>
 
                       <Grid item>
                         <Grid container flexDirection={"row"}>
-                          <ListItemText primary={task.duration} />
+                          <ListItemText primary={`${task.duration} minutos`} />
                         </Grid>
                       </Grid>
                     </ListItem>
@@ -147,7 +160,6 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
             </Grid>
           )}
         </Grid>
-
       </Paper>
     </Fragment>
   );

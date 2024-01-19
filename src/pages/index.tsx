@@ -356,10 +356,10 @@ export default function Home() {
 
         <div className={styles.subheader}>
           <Grid container spacing={2}>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
+            <Grid item lg={3} md={4} sm={12} xs={12}>
               <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
             </Grid>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
+            <Grid item lg={3} md={4} sm={12} xs={12}>
               {selectedTask && (
                 <Timer
                   duration={20}
@@ -369,10 +369,6 @@ export default function Home() {
                   handleFinish={onHandleFinishTask}
                 ></Timer>
               )}
-            </Grid>
-
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-              <TasksCount title={"Tasks Count"} count={20}></TasksCount>
             </Grid>
           </Grid>
         </div>
