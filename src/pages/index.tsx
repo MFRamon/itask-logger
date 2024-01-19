@@ -59,6 +59,7 @@ const initialRows: GridRowsProp = [
     duration: 25,
     status: randomRole(),
     creationDate: new Date(),
+    currentTime: 0
   },
   {
     id: randomId(),
@@ -68,6 +69,7 @@ const initialRows: GridRowsProp = [
     duration: 36,
     status: randomRole(),
     creationDate: new Date(),
+    currentTime: 0
   },
 ];
 
@@ -112,6 +114,8 @@ export default function Home() {
   const [finishedTaks, setFinishedTasks] = useState(
     rows.filter((task) => task.status === "FINISHED"),
   );
+
+  // const [selectedTaskTime, setSelectedTimeTask] = useState(); 
 
   useEffect(() => {
     const currentTask = rows.find((task) => task.id === selectedTask?.id);
@@ -254,43 +258,23 @@ export default function Home() {
     },
   ];
 
-  const columnsView: GridColDef[] = [
-    {
-      field: "description",
-      headerName: "Description",
-      width: 180,
-      editable: true,
-    },
-    {
-      field: "duration",
-      headerName: "Duration",
-      type: "number",
-      width: 80,
-      align: "left",
-      headerAlign: "left",
-      editable: true,
-    },
-    {
-      field: "status",
-      headerName: "Status",
-      width: 220,
-      editable: false,
-      type: "singleSelect",
-      valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
-    },
-  ];
-
   // Handles the status of the selected task
-  const onHandleChangeStatusTask = (operation: string) => {
+  const onHandleChangeStatusTask = (operation: string, currentMinutes: any) => {
     console.log(operation);
+    console.log(currentMinutes);
+
     const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-        return { ...task, status: operation };
+        return { ...task, status: operation, duration: currentMinutes };
       }
       return task;
     });
 
-    console.log(modifiedTasks);
+    if(operation === 'STOPPED'){
+      console.log("se pauso la tarea");
+      console.log(modifiedTasks);
+    }
+
     setRows(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };

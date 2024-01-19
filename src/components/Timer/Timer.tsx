@@ -29,24 +29,24 @@ const Timer = (props: any) => {
 
   const handleTimerStart = () => {
     setFlag(true);
-    handleStart(STATUSES.STARTED);
+    handleStart(STATUSES.STARTED, minutes);
   };
 
   const handleTimerReset = () => {
     setFlag(false);
     setSeconds(0);
     setMinutes(time);
-    handleReset(STATUSES.RESET);
+    handleReset(STATUSES.RESET, minutes);
   };
 
   const handleTimerPause = () => {
     setFlag(false);
-    handlePause(STATUSES.PAUSED);
+    handlePause(STATUSES.PAUSED, minutes);
   };
 
   const handleTimerFinish = () => {
     setFlag(true);
-    handleFinish(STATUSES.FINISHED);
+    handleFinish(STATUSES.FINISHED, minutes);
   };
 
   useEffect(() => {
