@@ -56,15 +56,6 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
               className={styles.chart}
               elevation={0}
             >
-              {/* Subheaders */}
-              <Grid container direction={"column"} alignItems="flex-start">
-                <Grid item>
-                  <Typography variant="body1">Finished Tasks</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body1">Finished Tasks</Typography>
-                </Grid>
-              </Grid>
               {/* Line Chart for Finished Tasks */}
               <Grid item>
                 <LineChart
