@@ -12,6 +12,22 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
+import Chip from '@mui/material/Chip';
+
+
+import {
+  randomCreatedDate,
+  randomTraderName,
+  randomId,
+  randomArrayItem,
+  randomDate,
+} from "@mui/x-data-grid-generator";
+
+const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
+
+const randomRole = () => {
+  return randomArrayItem(roles);
+};
 
 interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
@@ -19,10 +35,32 @@ interface ICompletedTasksTableProps {
   children?: React.ReactNode;
 }
 
+const mockData: GridRowsProp = [
+  {
+    id: 1,
+    description: randomTraderName(),
+    // This represents the amount of minutes remaining for finishing the task
+    timeToFinish: 20,
+    finishedAt: 30,
+    duration: 25,
+    status: randomRole(),
+    creationDate: new Date(),
+  },
+  {
+    id: 2,
+    description: randomTraderName(),
+    timeToFinish: 20,
+    finishedAt: 30,
+    duration: 36,
+    status: randomRole(),
+    creationDate: new Date(),
+  },
+];
+
 const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
 
-  const { completedTasks, columns } = props;
+  const { completedTasks = mockData, columns } = props;
 
   useEffect(() => {
     setDomLoaded(true);
@@ -39,14 +77,14 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
       >
         <Grid
           container
-          spacing={2}
-          direction={"column"}
-          justifyContent={"center"}
-          alignItems={"center"}
+          direction="column"
+          justifyContent="space-evenly"
+          alignItems="center"
+          gap={3}
         >
           {/* Header for container */}
           <Grid item id={"finished-tasks-title"} alignSelf={"flex-start"}>
-            <Typography variant="h5">Finished Tasks</Typography>
+            <Typography variant="h5" gutterBottom>Finished Tasks</Typography>
           </Grid>
 
           {/* Chart for Data */}
@@ -75,10 +113,9 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
 
           {/* TODO: Check Hydration */}
           {domLoaded && (
-            <Grid item>
+            <Grid item sx={{ width: '100%', minHeight: '150px', maxHeight: '150px', height: '150px'}}>
               <List
                 sx={{
-                  width: "400px",
                   overflow: "auto",
                   maxHeight: 200,
                 }}
@@ -93,7 +130,7 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
                       >
                         <Grid item>
                           <ListItemText primary={task.description} />
-                          <ListItemText primary={task.status} />
+                          <Chip sx={{ borderRadius: '8px'}} label={task.status} />
                         </Grid>
                       </Grid>
 
@@ -110,6 +147,7 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
             </Grid>
           )}
         </Grid>
+
       </Paper>
     </Fragment>
   );

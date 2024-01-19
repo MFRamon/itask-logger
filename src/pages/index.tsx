@@ -378,7 +378,7 @@ export default function Home() {
         </div>
 
         <Grid container spacing={2} className={styles.content}>
-          <Grid item lg={8} md={6}>
+          <Grid item lg={7} md={6}>
             <Paper elevation={0} sx={{ borderRadius: "12px" }}>
               <Stack
                 spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }}
@@ -419,7 +419,7 @@ export default function Home() {
               </Stack>
             </Paper>
           </Grid>
-          <Grid item lg={4} md={6} sx={{ padding: "0px" }}>
+          <Grid item lg={5} md={6}>
             <CompletedTasksTable
               completedTasks={finishedTaks}
               columns={columnsView}
