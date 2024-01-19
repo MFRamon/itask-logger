@@ -4,13 +4,19 @@ import { Grid, Paper, Typography } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
 
 interface ITimerPropos {
-  // TODO: Remove this any
   duration: any;
   handleStart: () => void;
   handlePause: () => void;
   handleFinish: () => void;
   handleReset: () => void;
 }
+
+const STATUSES = {
+  STARTED: "IN-PROGRESS",
+  RESET: "PENDING",
+  PAUSED: "STOPPED",
+  FINISHED: "FINISHED",
+};
 
 const Timer = (props: any) => {
   const { duration, handleStart, handlePause, handleFinish, handleReset } =
@@ -23,24 +29,24 @@ const Timer = (props: any) => {
 
   const handleTimerStart = () => {
     setFlag(true);
-    handleStart();
+    handleStart(STATUSES.STARTED);
   };
 
   const handleTimerReset = () => {
     setFlag(false);
     setSeconds(0);
     setMinutes(time);
-    handleReset();
+    handleReset(STATUSES.RESET);
   };
 
   const handleTimerPause = () => {
     setFlag(false);
-    handlePause();
+    handlePause(STATUSES.PAUSED);
   };
 
   const handleTimerFinish = () => {
     setFlag(true);
-    handleFinish();
+    handleFinish(STATUSES.FINISHED);
   };
 
   useEffect(() => {

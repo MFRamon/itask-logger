@@ -200,13 +200,7 @@ export default function Home() {
       width: 220,
       editable: true,
       type: "singleSelect",
-      valueOptions: [
-        "PENDING",
-        "IN-PROGRESS",
-        "STOPPED",
-        "FINISHED",
-        "RESTART",
-      ],
+      valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
     },
     {
       field: "actions",
@@ -282,60 +276,21 @@ export default function Home() {
       width: 220,
       editable: false,
       type: "singleSelect",
-      valueOptions: [
-        "PENDING",
-        "IN-PROGRESS",
-        "STOPPED",
-        "FINISHED",
-        "RESTART",
-      ],
+      valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
     },
   ];
 
-  const onHandleStartTask = () => {
+  // Handles the status of the selected task
+  const onHandleChangeStatusTask = (operation: string) => {
+    console.log(operation);
     const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-        return { ...task, status: "IN-PROGRESS" };
+        return { ...task, status: operation };
       }
       return task;
     });
 
-    setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
-  };
-
-  const onHandleStopTask = () => {
-    const modifiedTasks = rows.map((task) => {
-      if (task.id === selectedTask?.id) {
-        return { ...task, status: "STOPPED" };
-      }
-      return task;
-    });
-
-    setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
-  };
-
-  const onHandleFinishTask = () => {
-    const modifiedTasks = rows.map((task) => {
-      if (task.id === selectedTask?.id) {
-        return { ...task, status: "FINISHED" };
-      }
-      return task;
-    });
-
-    setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
-  };
-
-  const onHandleRestartTask = () => {
-    const modifiedTasks = rows.map((task) => {
-      if (task.id === selectedTask?.id) {
-        return { ...task, status: "PENDING" };
-      }
-      return task;
-    });
-
+    console.log(modifiedTasks);
     setRows(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };
@@ -357,10 +312,10 @@ export default function Home() {
               {selectedTask && (
                 <Timer
                   duration={20}
-                  handleStart={onHandleStartTask}
-                  handlePause={onHandleStopTask}
-                  handleReset={onHandleRestartTask}
-                  handleFinish={onHandleFinishTask}
+                  handleStart={onHandleChangeStatusTask}
+                  handlePause={onHandleChangeStatusTask}
+                  handleReset={onHandleChangeStatusTask}
+                  handleFinish={onHandleChangeStatusTask}
                 ></Timer>
               )}
             </Grid>
@@ -369,51 +324,28 @@ export default function Home() {
 
         <Grid container spacing={2} className={styles.content}>
           <Grid item lg={7} md={6}>
-            <Paper elevation={0} sx={{ borderRadius: "12px" }}>
-              <Stack
-                spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }}
-                direction="row"
-                useFlexGap
-                flexWrap="wrap"
-              >
-                <Box
-                  sx={{
-                    height: 500,
-                    width: "100%",
-                    "& .actions": {
-                      color: "text.secondary",
-                    },
-                    "& .textPrimary": {
-                      color: "text.primary",
-                    },
-                  }}
-                >
-                  <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    editMode="row"
-                    rowModesModel={rowModesModel}
-                    onRowModesModelChange={handleRowModesModelChange}
-                    onRowEditStop={handleRowEditStop}
-                    onRowClick={handleRowClick}
-                    processRowUpdate={processRowUpdate}
-                    slots={{
-                      toolbar: EditToolbar,
-                    }}
-                    slotProps={{
-                      toolbar: { setRows, setRowModesModel },
-                    }}
-                    sx={{ border: "0px" }}
-                  />
-                </Box>
-              </Stack>
+            <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                editMode="row"
+                rowModesModel={rowModesModel}
+                onRowModesModelChange={handleRowModesModelChange}
+                onRowEditStop={handleRowEditStop}
+                onRowClick={handleRowClick}
+                processRowUpdate={processRowUpdate}
+                slots={{
+                  toolbar: EditToolbar,
+                }}
+                slotProps={{
+                  toolbar: { setRows, setRowModesModel },
+                }}
+                sx={{ border: "0px" }}
+              />
             </Paper>
           </Grid>
           <Grid item lg={5} md={6}>
-            <CompletedTasksList>
-              completedTasks={finishedTaks}
-              columns={columnsView}
-            </CompletedTasksList>
+            <CompletedTasksList completedTasks={finishedTaks} />
           </Grid>
         </Grid>
       </main>

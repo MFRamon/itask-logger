@@ -28,8 +28,6 @@ const randomRole = () => {
 
 interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
-  columns: GridColDef[];
-  children?: React.ReactNode;
 }
 
 const mockData: GridRowsProp = [
@@ -57,7 +55,7 @@ const mockData: GridRowsProp = [
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
 
-  const { completedTasks = mockData, columns } = props;
+  const { completedTasks = mockData } = props;
 
   useEffect(() => {
     setDomLoaded(true);
