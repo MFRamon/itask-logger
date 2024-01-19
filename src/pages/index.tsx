@@ -48,9 +48,9 @@ import Paper from '@mui/material/Paper';
 import CompletedTasksTable from '@/components/CompletedTasksTable/CompletedTasksTable';
 import MetaHead from '@/components/MetaHead/MetaHead';
 import LogoHeader from '@/components/LogoHeader/LogoHeader';
-import LogoSubheader from '@/components/LogoSubheader/LogoSubheader';
-import TasksActions from '@/components/TasksActions/TasksActions';
 import { Grid } from '@mui/material';
+import Timer from '@/components/Timer/Timer';
+import SelectedTaskDetail from '@/components/SelectedTaskDetail/SelectedTaskDetail';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -121,9 +121,13 @@ const isTaskFinished = (task:any) => task.status === 'FINISHED'
 export default function Home() {
   const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>({});
-
   const [selectedTask, setSelectedTask] = React.useState<Task>();
   const [finishedTaks, setFinishedTasks] = React.useState(rows.filter((task => task.status === 'FINISHED' )));
+
+  React.useEffect(() => {
+    const currentTask = rows.find(task => task.id === selectedTask?.id);
+    setSelectedTask({id: currentTask?.id, description: currentTask?.description, duration: currentTask?.duration, status: currentTask?.status });
+  }, [rows]);
 
   const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -170,7 +174,6 @@ export default function Home() {
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
     setSelectedTask({id: params.row.id,description: params.row.description, duration: params.row.duration, status:params.row.status });
-    console.log(selectedTask);
   };
 
   const columns: GridColDef[] = [
@@ -319,7 +322,27 @@ export default function Home() {
         </div>
 
         <div className={styles.subheader}>
-          <LogoSubheader task={selectedTask!}></LogoSubheader>
+          <Grid container spacing={2}>
+            <Grid item lg={4} md={4} sm={12} xs={12}>
+                <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
+            </Grid>
+            <Grid item lg={4} md={4} sm={12} xs={12}>
+              <Timer duration={10} handleStart={onHandleStartTask} handlePause={onHandleStopTask} handleReset={onHandleRestartTask} handleFinish={onHandleFinishTask}></Timer>
+            </Grid>
+
+            <Grid item lg={4} md={4} sm={12} xs={12}>
+              <Paper elevation={2} className={styles.itemContainer}>
+                <Typography variant="h6">
+                  Total Tasks: 
+                </Typography>
+                <Grid container direction={"column"}>
+                  <Grid item>
+                      <Typography variant='body1'>{"100"}</Typography>
+                  </Grid>
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
         </div>
         
         {/* Content */}
@@ -356,7 +379,7 @@ export default function Home() {
                         toolbar: { setRows, setRowModesModel },
                       }}
                     />
-                    <TasksActions></TasksActions>
+                    {/* <TasksActions></TasksActions> */}
                   </Box>       
               </Stack>
             </Paper>

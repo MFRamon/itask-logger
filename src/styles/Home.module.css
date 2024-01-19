@@ -48,6 +48,13 @@
   grid-area: footer;
 }
 
+.itemContainer{
+  padding: 18px;
+  border-radius: 12px;
+  max-height: 250px;
+  min-height: 105px;
+}
+
 /* Mobile */
 @media (max-width: 768px) {
   .main{
