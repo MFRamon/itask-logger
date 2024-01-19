@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import CancelIcon from "@mui/icons-material/Close";
 import {
   GridRowsProp,
   GridRowModesModel,
@@ -22,36 +22,36 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
   GridToolbarFilterButton,
-} from '@mui/x-data-grid';
+} from "@mui/x-data-grid";
 import {
   randomCreatedDate,
   randomTraderName,
   randomId,
   randomArrayItem,
-  randomDate
-} from '@mui/x-data-grid-generator';
-import { Task } from '@mui/icons-material';
-import Paper from '@mui/material/Paper';
-import CompletedTasksTable from '@/components/CompletedTasksTable/CompletedTasksTable';
-import MetaHead from '@/components/MetaHead/MetaHead';
-import LogoHeader from '@/components/LogoHeader/LogoHeader';
-import { Grid } from '@mui/material';
-import Timer from '@/components/Timer/Timer';
-import SelectedTaskDetail from '@/components/SelectedTaskDetail/SelectedTaskDetail';
-import TasksCount from '@/components/TasksCount/TasksCount';
+  randomDate,
+} from "@mui/x-data-grid-generator";
+import { Task } from "@mui/icons-material";
+import Paper from "@mui/material/Paper";
+import CompletedTasksTable from "@/components/CompletedTasksTable/CompletedTasksTable";
+import MetaHead from "@/components/MetaHead/MetaHead";
+import LogoHeader from "@/components/LogoHeader/LogoHeader";
+import { Grid } from "@mui/material";
+import Timer from "@/components/Timer/Timer";
+import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
+import TasksCount from "@/components/TasksCount/TasksCount";
 
-const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
+const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
 
 const randomRole = () => {
   return randomArrayItem(roles);
 };
 
-export interface Task{
+export interface Task {
   id: string;
   description: string;
   duration: any;
-  status: string; 
-} 
+  status: string;
+}
 
 const initialRows: GridRowsProp = [
   {
@@ -87,10 +87,13 @@ function EditToolbar(props: EditToolbarProps) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, description: '', duration: '', isNew: true }]);
+    setRows((oldRows) => [
+      ...oldRows,
+      { id, description: "", duration: "", isNew: true },
+    ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'description' },
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "description" },
     }));
   };
 
@@ -103,28 +106,38 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-const inter = Inter({ subsets: ['latin'] });
-const isTaskFinished = (task:any) => task.status === 'FINISHED'
+const inter = Inter({ subsets: ["latin"] });
+const isTaskFinished = (task: any) => task.status === "FINISHED";
 
 export default function Home() {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   const [selectedTask, setSelectedTask] = useState<Task>();
-  const [finishedTaks, setFinishedTasks] = useState(rows.filter((task => task.status === 'FINISHED' )));
+  const [finishedTaks, setFinishedTasks] = useState(
+    rows.filter((task) => task.status === "FINISHED"),
+  );
 
   useEffect(() => {
-    const currentTask = rows.find(task => task.id === selectedTask?.id);
-    setSelectedTask({id: currentTask?.id, description: currentTask?.description, duration: currentTask?.duration, status: currentTask?.status });
+    const currentTask = rows.find((task) => task.id === selectedTask?.id);
+    setSelectedTask({
+      id: currentTask?.id,
+      description: currentTask?.description,
+      duration: currentTask?.duration,
+      status: currentTask?.status,
+    });
   }, [rows]);
 
-  const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
+  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
+    params,
+    event,
+  ) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
   const handleEditClick = (id: GridRowId) => () => {
-    console.log({...rowModesModel});
+    console.log({ ...rowModesModel });
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -152,7 +165,7 @@ export default function Home() {
     console.log(newRow);
     console.log("Termino el update");
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));    
+    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
 
@@ -160,35 +173,51 @@ export default function Home() {
     setRowModesModel(newRowModesModel);
   };
 
-  const handleRowClick: GridEventListener<'rowClick'> = (params) => {
-    setSelectedTask({id: params.row.id,description: params.row.description, duration: params.row.duration, status:params.row.status });
+  const handleRowClick: GridEventListener<"rowClick"> = (params) => {
+    setSelectedTask({
+      id: params.row.id,
+      description: params.row.description,
+      duration: params.row.duration,
+      status: params.row.status,
+    });
   };
 
   const columns: GridColDef[] = [
-    { field: 'description', headerName: 'Description', width: 180, editable: true },
     {
-      field: 'duration',
-      headerName: 'Duration',
-      type: 'number',
-      width: 80,
-      align: 'left',
-      headerAlign: 'left',
+      field: "description",
+      headerName: "Description",
+      width: 180,
       editable: true,
     },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: "duration",
+      headerName: "Duration",
+      type: "number",
+      width: 80,
+      align: "left",
+      headerAlign: "left",
+      editable: true,
+    },
+    {
+      field: "status",
+      headerName: "Status",
       width: 220,
       editable: true,
-      type: 'singleSelect',
-      valueOptions: ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART'],
+      type: "singleSelect",
+      valueOptions: [
+        "PENDING",
+        "IN-PROGRESS",
+        "STOPPED",
+        "FINISHED",
+        "RESTART",
+      ],
     },
     {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
       width: 100,
-      cellClassName: 'actions',
+      cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
@@ -198,7 +227,7 @@ export default function Home() {
               icon={<SaveIcon />}
               label="Save"
               sx={{
-                color: 'primary.main',
+                color: "primary.main",
               }}
               onClick={handleSaveClick(id)}
             />,
@@ -232,77 +261,88 @@ export default function Home() {
   ];
 
   const columnsView: GridColDef[] = [
-    { field: 'description', headerName: 'Description', width: 180, editable: true },
     {
-      field: 'duration',
-      headerName: 'Duration',
-      type: 'number',
-      width: 80,
-      align: 'left',
-      headerAlign: 'left',
+      field: "description",
+      headerName: "Description",
+      width: 180,
       editable: true,
     },
     {
-      field: 'status',
-      headerName: 'Status',
+      field: "duration",
+      headerName: "Duration",
+      type: "number",
+      width: 80,
+      align: "left",
+      headerAlign: "left",
+      editable: true,
+    },
+    {
+      field: "status",
+      headerName: "Status",
       width: 220,
       editable: false,
-      type: 'singleSelect',
-      valueOptions: ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED', 'RESTART'],
-    }
+      type: "singleSelect",
+      valueOptions: [
+        "PENDING",
+        "IN-PROGRESS",
+        "STOPPED",
+        "FINISHED",
+        "RESTART",
+      ],
+    },
   ];
 
   const onHandleStartTask = () => {
-    const modifiedTasks = rows.map(task => {
+    const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-          return { ...task, status: "IN-PROGRESS" };
+        return { ...task, status: "IN-PROGRESS" };
       }
       return task;
     });
 
     setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
-  }
-  
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
+  };
+
   const onHandleStopTask = () => {
-    const modifiedTasks = rows.map(task => {
+    const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-          return { ...task, status: "STOPPED" };
+        return { ...task, status: "STOPPED" };
       }
       return task;
     });
 
     setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
-  }
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
+  };
 
   const onHandleFinishTask = () => {
-    const modifiedTasks = rows.map(task => {
+    const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-          return { ...task, status: "FINISHED" };
+        return { ...task, status: "FINISHED" };
       }
       return task;
     });
 
     setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
-  }
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
+  };
 
   const onHandleRestartTask = () => {
-    const modifiedTasks = rows.map(task => {
+    const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-          return { ...task, status: "PENDING" };
+        return { ...task, status: "PENDING" };
       }
       return task;
     });
 
     setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished))
-  }
+    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
+  };
 
   return (
     <>
-      <MetaHead title={'Arkon Tasks Dashboard'}></MetaHead>
+      <MetaHead title={"Arkon Tasks Dashboard"}></MetaHead>
       <main className={styles.main}>
         <div className={styles.header}>
           <LogoHeader></LogoHeader>
@@ -314,57 +354,73 @@ export default function Home() {
               <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
             </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              {selectedTask && <Timer duration={selectedTask?.duration} handleStart={onHandleStartTask} handlePause={onHandleStopTask} handleReset={onHandleRestartTask} handleFinish={onHandleFinishTask}></Timer>}
+              {selectedTask && (
+                <Timer
+                  duration={selectedTask?.duration}
+                  handleStart={onHandleStartTask}
+                  handlePause={onHandleStopTask}
+                  handleReset={onHandleRestartTask}
+                  handleFinish={onHandleFinishTask}
+                ></Timer>
+              )}
             </Grid>
 
             <Grid item lg={4} md={4} sm={12} xs={12}>
-               <TasksCount title={"Tasks Count"} count={20}></TasksCount>
+              <TasksCount title={"Tasks Count"} count={20}></TasksCount>
             </Grid>
           </Grid>
         </div>
-        
+
         {/* Content */}
         <Grid container spacing={2} className={styles.content}>
           <Grid item lg={6} md={6}>
             <Paper elevation={3}>
-              <Stack spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2  }} direction="row" useFlexGap flexWrap="wrap">
-                  <Box
-                    sx={{
-                      height: 500,
-                      width: '100%',
-                      '& .actions': {
-                        color: 'text.secondary',
-                      },
-                      '& .textPrimary': {
-                        color: 'text.primary',
-                      },
+              <Stack
+                spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }}
+                direction="row"
+                useFlexGap
+                flexWrap="wrap"
+              >
+                <Box
+                  sx={{
+                    height: 500,
+                    width: "100%",
+                    "& .actions": {
+                      color: "text.secondary",
+                    },
+                    "& .textPrimary": {
+                      color: "text.primary",
+                    },
+                  }}
+                >
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    editMode="row"
+                    rowModesModel={rowModesModel}
+                    onRowModesModelChange={handleRowModesModelChange}
+                    onRowEditStop={handleRowEditStop}
+                    onRowClick={handleRowClick}
+                    processRowUpdate={processRowUpdate}
+                    slots={{
+                      toolbar: EditToolbar,
                     }}
-                  >
-                    <DataGrid
-                      rows={rows}
-                      columns={columns}
-                      editMode="row"
-                      rowModesModel={rowModesModel}
-                      onRowModesModelChange={handleRowModesModelChange}
-                      onRowEditStop={handleRowEditStop}
-                      onRowClick={handleRowClick}
-                      processRowUpdate={processRowUpdate}
-                      slots={{
-                        toolbar: EditToolbar,
-                      }}
-                      slotProps={{
-                        toolbar: { setRows, setRowModesModel },
-                      }}
-                    />
-                  </Box>       
+                    slotProps={{
+                      toolbar: { setRows, setRowModesModel },
+                    }}
+                  />
+                </Box>
               </Stack>
             </Paper>
           </Grid>
-          <Grid item lg={6} md={6} sx={{ padding: '0px'}}>
-            <CompletedTasksTable completedTasks={finishedTaks} columns={columnsView}></CompletedTasksTable>
+          <Grid item lg={6} md={6} sx={{ padding: "0px" }}>
+            <CompletedTasksTable
+              completedTasks={finishedTaks}
+              columns={columnsView}
+            ></CompletedTasksTable>
           </Grid>
         </Grid>
       </main>
     </>
-  )
+  );
 }
