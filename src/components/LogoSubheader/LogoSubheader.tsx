@@ -8,29 +8,36 @@ import { deepOrange, green } from '@mui/material/colors';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import styles from '@/components/LogoSubheader/LogoSubheader.module.css'
 
+import { Task } from '@/pages';
+
 interface ILogoSubheaderProps {
-    //TODO: To define interface
+  task: Task
 }
 
-
-export default function LogoSubheader(props: ILogoSubheaderProps) {  
+function LogoSubheader(props: ILogoSubheaderProps) {  
+    const { description, duration, status } = props.task || {}
 
     return (
       <React.Fragment>
         <Grid container spacing={2}>
-            <Grid item lg={4} md={4} sm={12} xs={12}>
-                <Paper elevation={1} className={styles.itemContainer}>
-                  <Avatar sx={{ bgcolor: green[500], marginBottom: '10px' }} variant="rounded">
-                    <AssignmentIcon />
-                  </Avatar>
+          <Grid item lg={4} md={4} sm={12} xs={12}>
+              <Paper elevation={1} className={styles.itemContainer} sx={{height: '142px', minHeight: '142px'}}>
                   <Typography variant="h6">
-                      Total Tasks
+                      Selected Task: 
                   </Typography>
-                  <Typography variant="body1">
-                      100
-                  </Typography>
-                </Paper>
-            </Grid>
+                  <Grid container direction={"column"}>
+                  <Grid item>
+                      <Typography variant='body1'>{`Description:  ${description}`}</Typography>
+                  </Grid>
+                  <Grid item>
+                      <Typography variant='body1'>{`Duration:  ${duration} minutes`}</Typography>
+                  </Grid>
+                  <Grid item>
+                      <Typography variant='body1'>{`Status:  ${status}`}</Typography>
+                  </Grid>
+                  </Grid>
+              </Paper>
+          </Grid>
             <Grid item lg={4} md={4} sm={12} xs={12}>
               <Paper elevation={1} className={styles.itemContainer}>
                   <Avatar sx={{ bgcolor: green[500], marginBottom: '10px' }} variant="rounded">
@@ -61,3 +68,5 @@ export default function LogoSubheader(props: ILogoSubheaderProps) {
       </React.Fragment>
     )
 }
+
+export default LogoSubheader;

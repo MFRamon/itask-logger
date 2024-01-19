@@ -58,7 +58,7 @@ const randomRole = () => {
   return randomArrayItem(roles);
 };
 
-interface Task{
+export interface Task{
   id: string;
   description: string;
   duration: string;
@@ -170,6 +170,7 @@ export default function Home() {
 
   const handleRowClick: GridEventListener<'rowClick'> = (params) => {
     setSelectedTask({id: params.row.id,description: params.row.description, duration: params.row.duration, status:params.row.status });
+    console.log(selectedTask);
   };
 
   const columns: GridColDef[] = [
@@ -318,7 +319,7 @@ export default function Home() {
         </div>
 
         <div className={styles.subheader}>
-          <LogoSubheader></LogoSubheader>
+          <LogoSubheader task={selectedTask!}></LogoSubheader>
         </div>
         
         {/* Content */}
@@ -349,12 +350,13 @@ export default function Home() {
                       processRowUpdate={processRowUpdate}
                       slots={{
                         toolbar: EditToolbar,
-                        footer: TasksActions
+                        // footer: TasksActions
                       }}
                       slotProps={{
                         toolbar: { setRows, setRowModesModel },
                       }}
                     />
+                    <TasksActions></TasksActions>
                   </Box>       
               </Stack>
             </Paper>
