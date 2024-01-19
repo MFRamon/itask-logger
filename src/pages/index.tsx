@@ -51,6 +51,7 @@ import LogoHeader from '@/components/LogoHeader/LogoHeader';
 import { Grid } from '@mui/material';
 import Timer from '@/components/Timer/Timer';
 import SelectedTaskDetail from '@/components/SelectedTaskDetail/SelectedTaskDetail';
+import TasksCount from '@/components/TasksCount/TasksCount';
 
 const roles = ['PENDING','IN-PROGRESS', 'STOPPED', 'FINISHED' ];
 
@@ -330,16 +331,7 @@ export default function Home() {
             </Grid>
 
             <Grid item lg={4} md={4} sm={12} xs={12}>
-              <Paper elevation={2} className={styles.itemContainer}>
-                <Typography variant="h6">
-                  Total Tasks: 
-                </Typography>
-                <Grid container direction={"column"}>
-                  <Grid item>
-                      <Typography variant='body1'>{"100"}</Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
+               <TasksCount title={"Tasks Count"} count={20}></TasksCount>
             </Grid>
           </Grid>
         </div>
