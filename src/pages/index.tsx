@@ -380,7 +380,7 @@ export default function Home() {
         {/* Content */}
         <Grid container spacing={2} className={styles.content}>
           <Grid item lg={6} md={6}>
-            <Paper elevation={0} sx={{borderRadius: '12px'}}>
+            <Paper elevation={0} sx={{ borderRadius: "12px" }}>
               <Stack
                 spacing={{ xs: 1, sm: 2, md: 2, lg: 2, xl: 2 }}
                 direction="row"
@@ -414,7 +414,7 @@ export default function Home() {
                     slotProps={{
                       toolbar: { setRows, setRowModesModel },
                     }}
-                    sx={{border: '0px'}}
+                    sx={{ border: "0px" }}
                   />
                 </Box>
               </Stack>
