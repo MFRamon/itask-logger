@@ -2,11 +2,9 @@ import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
 import { LineChart } from "@mui/x-charts/LineChart";
-import styles from "@/components/CompletedTasksTable/CompletedTasksTable.module.css";
+import styles from "@/components/CompletedTasksList/CompletedTasksList.module.css";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -56,7 +54,7 @@ const mockData: GridRowsProp = [
   },
 ];
 
-const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
+const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
 
   const { completedTasks = mockData, columns } = props;
@@ -165,4 +163,4 @@ const CompletedTasksTable = (props: ICompletedTasksTableProps) => {
   );
 };
 
-export default CompletedTasksTable;
+export default CompletedTasksList;

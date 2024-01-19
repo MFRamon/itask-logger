@@ -21,24 +21,20 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
-  GridToolbarFilterButton,
 } from "@mui/x-data-grid";
 import {
-  randomCreatedDate,
   randomTraderName,
   randomId,
   randomArrayItem,
-  randomDate,
 } from "@mui/x-data-grid-generator";
 import { Task } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
-import CompletedTasksTable from "@/components/CompletedTasksTable/CompletedTasksTable";
+import CompletedTasksList from "@/components/CompletedTasksList/CompletedTasksList";
 import MetaHead from "@/components/MetaHead/MetaHead";
 import LogoHeader from "@/components/LogoHeader/LogoHeader";
 import { Grid } from "@mui/material";
 import Timer from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
-import TasksCount from "@/components/TasksCount/TasksCount";
 
 const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
 
@@ -329,7 +325,6 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
-    console.log(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };
 
@@ -342,7 +337,6 @@ export default function Home() {
     });
 
     setRows(modifiedTasks);
-    console.log(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
   };
 
@@ -416,10 +410,10 @@ export default function Home() {
             </Paper>
           </Grid>
           <Grid item lg={5} md={6}>
-            <CompletedTasksTable
+            <CompletedTasksList>
               completedTasks={finishedTaks}
               columns={columnsView}
-            ></CompletedTasksTable>
+            </CompletedTasksList>
           </Grid>
         </Grid>
       </main>
