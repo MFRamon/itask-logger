@@ -281,7 +281,7 @@ export default function Home() {
 
   return (
     <>
-      <MetaHead title={"Arkon Tasks Dashboard"}></MetaHead>
+      <MetaHead title={"Dashboard"}></MetaHead>
       <main className={styles.main}>
         <div className={styles.header}>
           <LogoHeader></LogoHeader>
