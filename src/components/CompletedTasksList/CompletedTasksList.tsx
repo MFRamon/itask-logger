@@ -61,7 +61,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
     setDomLoaded(true);
   }, []);
 
-  console.log(completedTasks);
+  // console.log(completedTasks);
 
   return (
     <Fragment>

@@ -3,13 +3,13 @@ import Button from "@mui/material/Button";
 import { Grid, Paper, Typography } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
 
-interface ITimerPropos {
-  duration: any;
-  handleStart: () => void;
-  handlePause: () => void;
-  handleFinish: () => void;
-  handleReset: () => void;
-}
+// interface ITimerPropos {
+//   duration: any;
+//   handleStart: () => void;
+//   handlePause: () => void;
+//   handleFinish: () => void;
+//   handleReset: () => void;
+// }
 
 const STATUSES = {
   STARTED: "IN-PROGRESS",
@@ -19,8 +19,11 @@ const STATUSES = {
 };
 
 const Timer = (props: any) => {
-  const { duration, handleStart, handlePause, handleFinish, handleReset } =
-    props;
+  const { duration, handleStart, handlePause, handleFinish, handleReset } = props;
+
+  // El valor de la inicializacion solo se ejecuta en el primer render.
+  // Agregar una columna de tiempo restante. 
+
 
   const [time, setTime] = useState(duration);
   const [minutes, setMinutes] = useState(duration);
@@ -45,20 +48,19 @@ const Timer = (props: any) => {
   };
 
   const handleTimerFinish = () => {
+    //TODO: Marcar el timer a 0 cuando una tarea se termina
     setFlag(true);
     handleFinish(STATUSES.FINISHED, minutes);
   };
 
   useEffect(() => {
-    setTime(duration);
+    // setMinutes(duration);
     if (flag) {
       const interval = setInterval(() => {
-        // @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
-        if (parseInt(seconds) === 0 && parseInt(minutes) !== 0) {
+        if (seconds === 0 && minutes !== 0) {
           setSeconds((seconds) => seconds + 59);
           setMinutes((minutes: number) => minutes - 1);
-          // @ts-ignore: Argument of type 'string' is not assignable to parameter of type 'number'.
-        } else if (parseInt(seconds) === 0 && parseInt(minutes) === 0) {
+        } else if (seconds === 0 && minutes === 0) {
         } else {
           setSeconds((seconds) => seconds - 1);
         }
@@ -67,8 +69,11 @@ const Timer = (props: any) => {
       return () => {
         clearInterval(interval);
       };
+    } else {
+      setMinutes(duration);
     }
   }, [seconds, minutes, flag, duration]);
+
 
   return (
     <Fragment>
@@ -89,8 +94,8 @@ const Timer = (props: any) => {
 
           <Grid item>
             <Typography variant="body1" gutterBottom>
-              {parseInt(minutes) < 10 ? "0" + minutes : minutes} :{" "}
-              {parseInt(seconds) < 10 ? "0" + seconds : seconds}
+              {minutes < 10 ? "0" + minutes : minutes} :{" "}
+              {seconds < 10 ? "0" + seconds : seconds}
               {" minutes"}
             </Typography>
           </Grid>

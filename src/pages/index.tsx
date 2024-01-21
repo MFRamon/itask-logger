@@ -43,7 +43,7 @@ const randomRole = () => {
 };
 
 export interface Task {
-  id: string;
+  id: number;
   description: string;
   duration: any;
   status: string;
@@ -107,10 +107,12 @@ function EditToolbar(props: EditToolbarProps) {
 const inter = Inter({ subsets: ["latin"] });
 const isTaskFinished = (task: any) => task.status === "FINISHED";
 
+const defaultTask: Task = { id: 0, description: "", duration: 0, status: "" };
+
 export default function Home() {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const [selectedTask, setSelectedTask] = useState<Task>();
+  const [selectedTask, setSelectedTask] = useState(defaultTask);
   const [finishedTaks, setFinishedTasks] = useState(
     rows.filter((task) => task.status === "FINISHED"),
   );
@@ -119,12 +121,16 @@ export default function Home() {
 
   useEffect(() => {
     const currentTask = rows.find((task) => task.id === selectedTask?.id);
+   if (!currentTask) {
+    setSelectedTask(defaultTask);
+   } else {
     setSelectedTask({
       id: currentTask?.id,
       description: currentTask?.description,
       duration: currentTask?.duration,
       status: currentTask?.status,
     });
+   }
   }, [rows]);
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -290,12 +296,12 @@ export default function Home() {
         <div className={styles.subheader}>
           <Grid container spacing={2}>
             <Grid item lg={3} md={4} sm={12} xs={12}>
-              <SelectedTaskDetail task={selectedTask!}></SelectedTaskDetail>
+              <SelectedTaskDetail task={selectedTask}></SelectedTaskDetail>
             </Grid>
             <Grid item lg={3} md={4} sm={12} xs={12}>
               {selectedTask && (
                 <Timer
-                  duration={20}
+                  duration={selectedTask.duration}
                   handleStart={onHandleChangeStatusTask}
                   handlePause={onHandleChangeStatusTask}
                   handleReset={onHandleChangeStatusTask}
