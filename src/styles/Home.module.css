@@ -8,8 +8,6 @@
     "subheader subheader subheader"
     "content content content";
   min-height: 100vh;
-  /* margin: 1.5rem; */
-  /* padding: 1.5rem; */
 }
 
 .header {
@@ -29,7 +27,6 @@
 }
 
 .content {
-  /* background-color: red; */
   height: 500px;
   grid-area: content;
 }

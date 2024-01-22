@@ -21,7 +21,7 @@ import {
   randomId,
   randomArrayItem,
 } from "@mui/x-data-grid-generator";
-import { Padding, Task } from "@mui/icons-material";
+import { Task } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import CompletedTasksList from "@/components/CompletedTasksList/CompletedTasksList";
 import MetaHead from "@/components/MetaHead/MetaHead";
@@ -276,9 +276,9 @@ export default function Home() {
           </Grid>
         </Box>
 
-        <Box className={styles.content} mt={{sm: 10, xs: 5}}>
-          <Grid container direction={"column"} spacing={2} padding={{xs: 2}}>
-            <Grid item lg={7} md={6} sm={12} xs={12}>
+        <Box className={styles.content} mt={{xs: 0}}>
+          <Grid container spacing={2} padding={{xs: 2}}>
+            <Grid item  xs={12} sm={12} md={6} lg={7} xl={6}>
               <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
                 <DataGrid
                   rows={rows.filter((row) => {
@@ -312,13 +312,13 @@ export default function Home() {
                 />
               </Paper>
             </Grid>
-            {/* <Grid item lg={5} md={6}>
+            <Grid item  xs={12} sm={12} md={6} lg={5} xl={6}  >
               <CompletedTasksList
                 completedTasks={rows.filter(
                   (row) => row.status === STATUSES.FINISHED,
                 )}
               />
-            </Grid> */}
+            </Grid>
           </Grid>
         </Box>
        

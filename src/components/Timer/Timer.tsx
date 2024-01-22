@@ -119,7 +119,7 @@ const Timer = (props: any) => {
   return (
     <Fragment>
       <Paper
-        elevation={1}
+        elevation={0}
         className={styles.itemContainer}
         sx={{ height: "142px", minHeight: "142px" }}
       >
