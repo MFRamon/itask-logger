@@ -4,13 +4,11 @@ import React, { Fragment } from "react";
 import styles from "@/components/SelectedTaskDetail/SelectedTaskDetail.module.css";
 
 interface ISelectedTaskDetailProps {
-  task: Task;
+  task: Task | undefined;
 }
 
 const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
-  const { description, duration, status, timeToFinish } = props.task || {};
-
-  console.log(timeToFinish)
+  const { id, description, duration, status, timeToFinish } = props.task || {};
 
   return (
     <Fragment>
@@ -20,7 +18,7 @@ const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
         sx={{ height: "142px", minHeight: "142px" }}
       >
         <Grid container direction={"column"}>
-          {props.task.description !== "" ? (
+          {props.task ? (
             <Fragment>
               <Typography variant="h6">Selected Task:</Typography>
               <Grid item>

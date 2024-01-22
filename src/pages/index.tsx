@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SaveIcon from "@mui/icons-material/Save";
@@ -13,7 +10,6 @@ import {
   GridRowModes,
   DataGrid,
   GridColDef,
-  GridToolbarContainer,
   GridActionsCellItem,
   GridEventListener,
   GridRowId,
@@ -33,8 +29,7 @@ import LogoHeader from "@/components/LogoHeader/LogoHeader";
 import { Grid } from "@mui/material";
 import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
-import CustomToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
-import TasksEditStatusCell from "@/components/TasksEditStatusCell/TasksEditStatusCell";
+import TasksTableToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
 
 const roles = ["PENDING", "IN-PROGRESS", "PAUSED", "FINISHED", "RESET"];
 
@@ -55,50 +50,35 @@ const initialRows: GridRowsProp = [
     id: randomId(),
     description: randomTraderName(),
     duration: 25,
-    status: randomRole(),
+    status: "PENDING",
     timeToFinish: 25,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
   },
   {
     id: randomId(),
     description: randomTraderName(),
     duration: 36,
-    status: randomRole(),
-    timeToFinish: 36
+    status: "FINISHED",
+    timeToFinish: 36,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
   },
 ];
 
 // const inter = Inter({ subsets: ["latin"] });
 const isTaskFinished = (task: any) => task.status === "FINISHED";
 
-const initialSelectedTask: Task = { id: 0, description: "", duration: 0, status: "", timeToFinish: 0 };
-
 export default function Home() {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  
-  const [selectedTask, setSelectedTask] = useState(initialSelectedTask);
-  const [remainingMinutesSelectedTask, setRemainingMinutesSelectedTask] = useState(0);
+  const [id, setId] = useState(-1);
+  const [selectedFilter, setSelectedFilter] = useState("NONE");
 
-  const [minutes, setMinutes] = useState(0);
-
-  const [finishedTaks, setFinishedTasks] = useState(
-    rows.filter((task) => task.status === "FINISHED"),
-  );
-
-  useEffect(() => {
-    const currentTask = rows.find((task) => task.id === selectedTask?.id);
-    if (!currentTask) {
-      setSelectedTask(initialSelectedTask);
-    } else {
-      setSelectedTask({
-        id: currentTask?.id,
-        description: currentTask?.description,
-        duration: currentTask?.duration,
-        status: currentTask?.status,
-        timeToFinish: currentTask?.duration - remainingMinutesSelectedTask
-      });
-    }
-  }, [rows]);
+  const selectedTask = rows.find((row) => row.id === id);
+  const remainingMinutes = selectedTask?.timeToFinish;
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
     params,
@@ -138,6 +118,7 @@ export default function Home() {
     console.log(newRow);
     console.log("Termino el update");
     const updatedRow = { ...newRow, isNew: false };
+    console.log({...newRow})
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -147,23 +128,8 @@ export default function Home() {
   };
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
-    if(params.row.status === STATUSES.PENDING){
-      setSelectedTask({
-        id: params.row.id,
-        description: params.row.description,
-        duration: params.row.duration,
-        status: params.row.status,
-        timeToFinish: params.row.duration
-      });
-    }else{
-      setSelectedTask({
-        id: params.row.id,
-        description: params.row.description,
-        duration: params.row.duration,
-        status: params.row.status,
-        timeToFinish: params.row.duration - remainingMinutesSelectedTask
-      });
-    }
+    const rowId = params.row.id;
+    setId(rowId);
   };
 
   const columns: GridColDef[] = [
@@ -249,34 +215,28 @@ export default function Home() {
 
     const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-        return { ...task, status: operation};
+        return { ...task, status: operation };
       }
       return task;
     });
 
-    if (operation === "PAUSED") {
-      console.log("se pauso la tarea");
-      console.log(modifiedTasks);
+    const selectedRow = modifiedTasks.find((row) => row.id === id);
+    if (!selectedRow) return;
+
+    if (operation === "RESET") {
+      selectedRow.timeToFinish = selectedRow.duration;
     }
 
+    if (operation === "FINISHED") {
+      selectedRow.completedTime = selectedRow.duration - selectedRow.timeToFinish;
+      selectedRow.finishedDate = new Date();
+    }
+    
+      const rowIndex = modifiedTasks.findIndex((row) => row.id === id);
+      modifiedTasks.splice(rowIndex, 1, selectedRow);
+
     setRows(modifiedTasks);
-    setFinishedTasks(modifiedTasks.filter(isTaskFinished));
-    // onHandleUpdateTime(currentMinutes);
   };
-
-  const onHandleUpdateTime = (remainingMinutes: number) => {
-    console.log(`Tiempo que viene del counter ${remainingMinutes}`);
-    setRemainingMinutesSelectedTask(remainingMinutes);
-
-    setSelectedTask({...selectedTask, timeToFinish: remainingMinutes});
-
-    console.log(selectedTask);
-  }
-
-  useEffect(() => {
-    setRemainingMinutesSelectedTask(minutes);
-    setSelectedTask({...selectedTask, timeToFinish: remainingMinutesSelectedTask});
-  },[minutes, remainingMinutesSelectedTask])
 
   return (
     <>
@@ -289,21 +249,22 @@ export default function Home() {
         <div className={styles.subheader}>
           <Grid container spacing={2}>
             <Grid item lg={3} md={4} sm={12} xs={12}>
-              <SelectedTaskDetail task={selectedTask}></SelectedTaskDetail>
+              <SelectedTaskDetail
+                task={selectedTask as Task}
+              ></SelectedTaskDetail>
             </Grid>
             <Grid item lg={3} md={4} sm={12} xs={12}>
-              {selectedTask && (
-                <Timer
-                  duration={selectedTask.duration}
-                  minutes={minutes}
-                  setMinutes={setMinutes}
-                  handleStart={onHandleChangeStatusTask}
-                  handlePause={onHandleChangeStatusTask}
-                  handleReset={onHandleChangeStatusTask}
-                  handleFinish={onHandleChangeStatusTask}
-                  getMinutes={onHandleUpdateTime}
-                ></Timer>
-              )}
+              <Timer
+                rowId={id}
+                setRows={setRows}
+                selectedTask={selectedTask}
+                duration={selectedTask?.duration}
+                minutes={remainingMinutes}
+                handleStart={onHandleChangeStatusTask}
+                handlePause={onHandleChangeStatusTask}
+                handleReset={onHandleChangeStatusTask}
+                handleFinish={onHandleChangeStatusTask}
+              ></Timer>
             </Grid>
           </Grid>
         </div>
@@ -312,7 +273,14 @@ export default function Home() {
           <Grid item lg={7} md={6}>
             <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
               <DataGrid
-                rows={rows}
+                rows={rows.filter((row) => {
+                  switch(selectedFilter) {
+                    case "SHORT": return row.duration < 30
+                    case "MEDIUM": return row.duration > 30 || row.duration === 60
+                    case "NONE":  return true
+                    default: return true;
+                  }
+                })}
                 columns={columns}
                 editMode="row"
                 rowModesModel={rowModesModel}
@@ -321,17 +289,14 @@ export default function Home() {
                 onRowClick={handleRowClick}
                 processRowUpdate={processRowUpdate}
                 slots={{
-                  toolbar: CustomToolbar,
-                }}
-                slotProps={{
-                  toolbar: { setRows, setRowModesModel, rows },
+                  toolbar: (props) => <TasksTableToolbar {...props} setSelectedFilter={setSelectedFilter} />,
                 }}
                 sx={{ border: "0px" }}
               />
             </Paper>
           </Grid>
           <Grid item lg={5} md={6}>
-            <CompletedTasksList completedTasks={finishedTaks} />
+            <CompletedTasksList completedTasks={rows.filter((row) => row.status === STATUSES.FINISHED)} />
           </Grid>
         </Grid>
       </main>

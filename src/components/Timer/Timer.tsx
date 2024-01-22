@@ -9,8 +9,7 @@ interface ITimerPropos {
   handlePause: () => void;
   handleFinish: () => void;
   handleReset: () => void;
-  minutes: number
-  // getMinutes: () => void
+  minutes: number;
 }
 
 export const STATUSES = {
@@ -22,68 +21,101 @@ export const STATUSES = {
 };
 
 const Timer = (props: any) => {
-  const { duration, handleStart, handlePause, handleFinish, handleReset, getMinutes, minutes, setMinutes } =
-    props;
+  const {
+    duration,
+    handleStart,
+    handlePause,
+    handleFinish,
+    handleReset,
+    minutes,
+    setRows,
+    rowId,
+    selectedTask,
+  } = props;
 
-  // El valor de la inicializacion solo se ejecuta en el primer render.
-  // Agregar una columna de tiempo restante.
-
-  const [time, setTime] = useState(duration);
-  
   const [seconds, setSeconds] = useState(0);
-  const [flag, setFlag] = useState(false);
-  
-  // console.log(time);
-  // console.log(minutes);
-  // console.log(seconds);
+  const [active, setActive] = useState(false);
 
   const handleTimerStart = () => {
-    setFlag(true);
+    setActive(true);
     handleStart(STATUSES.STARTED, minutes);
   };
 
   const handleTimerReset = () => {
-    setFlag(false);
+    setActive(false);
     setSeconds(0);
-    setMinutes(time);
     handleReset(STATUSES.RESET, minutes);
   };
 
   const handleTimerPause = () => {
-    setFlag(false);
+    setActive(false);
     handlePause(STATUSES.PAUSED, minutes);
   };
 
   const handleTimerFinish = () => {
-    setFlag(true);
+    setActive(false);
     handleFinish(STATUSES.FINISHED, minutes);
   };
 
-  const updateCurrentTime = useCallback(() => {
-    getMinutes(minutes)
-  }, [getMinutes, minutes]);
 
   useEffect(() => {
-    if (flag) {
+    if (active) {
       const interval = setInterval(() => {
         if (seconds === 0 && minutes !== 0) {
           setSeconds((seconds) => seconds + 59);
-          setMinutes((minutes: number) => minutes - 1);
-          // updateCurrentTime();
+          // setMinutes((minutes: number) => minutes - 1);
+          setRows((rows: any) => {
+            const newRows = [...rows];
+
+            const selectedRow = newRows.find((row) => row.id === rowId);
+            selectedRow.timeToFinish = minutes - 1;
+
+            const rowIndex = newRows.findIndex((row) => row.id === rowId);
+            newRows.splice(rowIndex, 1, selectedRow);
+
+            return newRows;
+          });
         } else if (seconds === 0 && minutes === 0) {
+          setRows((rows: any) => {
+            const newRows = [...rows];
+
+            const selectedRow = newRows.find((row) => row.id === rowId);
+            selectedRow.status = STATUSES.FINISHED;
+
+            const rowIndex = newRows.findIndex((row) => row.id === rowId);
+            newRows.splice(rowIndex, 1, selectedRow);
+
+            return newRows;
+          });
+          setActive(false);
         } else {
           setSeconds((seconds) => seconds - 1);
         }
-      }, 1000);
+      }, 5);
 
       return () => {
         clearInterval(interval);
       };
-    } else {
-      setMinutes(duration);
     }
+  }, [seconds, minutes, active, rowId, setRows]);
 
-  }, [seconds, minutes, flag, duration, updateCurrentTime]);
+  const remainingMinutes = minutes < 10 ? "0" + minutes : minutes;
+  const timerMinutes =
+    selectedTask?.status === STATUSES.RESET ? duration : remainingMinutes;
+
+  /*
+  const sec = 60 - seconds;
+  let min = duration - remainingMinutes
+
+  if (sec !== 0) {
+    min -= 1;
+  }*/
+
+  // Cuando se edita la duracion que se actualice el tiempo restante
+
+  // Al borrar una task que se inicialice el reloj a cero
+  // Al cambiar de task seleccionada que se inicialice el reloj al tiempo restante o la duracion
+  // Si se cambia el status a finished que se guarde el tiempo que le tomo si la empezo o si no que se le deje terminarla
 
   return (
     <Fragment>
@@ -104,8 +136,7 @@ const Timer = (props: any) => {
 
           <Grid item>
             <Typography variant="body1" gutterBottom>
-              {minutes < 10 ? "0" + minutes : minutes} :{" "}
-              {seconds < 10 ? "0" + seconds : seconds}
+              {timerMinutes || "00"} : {seconds < 10 ? "0" + seconds : seconds}
               {" minutes"}
             </Typography>
           </Grid>
@@ -117,22 +148,30 @@ const Timer = (props: any) => {
               justifyContent={"space-between"}
               spacing={1}
             >
-              <Button
-                onClick={handleTimerStart}
-                variant="outlined"
-                color="success"
-                size="small"
-              >
-                Start
-              </Button>
-              <Button
-                onClick={handleTimerPause}
-                variant="outlined"
-                color="info"
-                size="small"
-              >
-                Pause
-              </Button>
+              {selectedTask?.status === STATUSES.PENDING ||
+              selectedTask?.status === STATUSES.PAUSED ||
+              selectedTask?.status === STATUSES.RESET ||
+              selectedTask?.status === STATUSES.FINISHED ? (
+                <Button
+                  onClick={handleTimerStart}
+                  variant="outlined"
+                  color="success"
+                  size="small"
+                >
+                  {selectedTask?.status === STATUSES.PAUSED
+                    ? "Resume"
+                    : "Start"}
+                </Button>
+              ) : (
+                <Button
+                  onClick={handleTimerPause}
+                  variant="outlined"
+                  color="info"
+                  size="small"
+                >
+                  Pause
+                </Button>
+              )}
               <Button
                 onClick={handleTimerFinish}
                 variant="outlined"

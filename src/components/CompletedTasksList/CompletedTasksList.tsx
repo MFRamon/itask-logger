@@ -60,7 +60,6 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
     setDomLoaded(true);
   }, []);
 
-
   return (
     <Fragment>
       <Paper
@@ -125,7 +124,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               >
                 {completedTasks.map((task, id) => (
                   <>
-                    <ListItem alignItems="flex-start">
+                    <ListItem id={"1"} alignItems="flex-start">
                       <Grid
                         container
                         flexDirection={"column"}
@@ -141,9 +140,13 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                         </Grid>
                       </Grid>
 
+                      {/* Le tomo x minutos */}
                       <Grid item>
                         <Grid container flexDirection={"row"}>
-                          <ListItemText primary={`${task.duration} minutes`} />
+                          <ListItemText
+                            primary={`${task.completedTime} minutes`}
+                            secondary={task.finishedDate.toString()}
+                          />
                         </Grid>
                       </Grid>
                     </ListItem>

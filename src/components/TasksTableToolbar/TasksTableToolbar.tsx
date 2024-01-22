@@ -1,69 +1,67 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import { useGridApiContext } from '@mui/x-data-grid';
-import { useDemoData, randomId } from '@mui/x-data-grid-generator';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import { useGridApiContext } from "@mui/x-data-grid";
+import { useDemoData, randomId } from "@mui/x-data-grid-generator";
 import {
-    GridRowsProp,
-    GridRowModesModel,
-    GridRowModes,
-    DataGrid,
-    GridColDef,
-    GridToolbarContainer,
-    GridActionsCellItem,
-    GridEventListener,
-    GridRowId,
-    GridRowModel,
-  } from "@mui/x-data-grid";
+  GridRowsProp,
+  GridRowModesModel,
+  GridRowModes,
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridActionsCellItem,
+  GridEventListener,
+  GridRowId,
+  GridRowModel,
+} from "@mui/x-data-grid";
 
 interface EditToolbarProps {
-    setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-    setRowModesModel: (
-      newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-    ) => void;
-    rows: GridRowModel
+  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  setRowModesModel: (
+    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
+  ) => void;
+  rows: GridRowModel;
+  setSelectedFilter: (filterName: string) => void;
 }
 
-const CustomToolbar = (props: EditToolbarProps) => {
-    const { setRows, setRowModesModel, rows } = props;
+const TasksTableToolbar = (props: EditToolbarProps) => {
+  const { setRows, setRowModesModel, rows, setSelectedFilter} = props;
 
-    const apiRef = useGridApiContext();
-  
-    const handleClick = () => {
-        const id = randomId();
-        setRows((oldRows) => [
-          ...oldRows,
-          { id, description: "", duration: "", isNew: true },
-        ]);
-        setRowModesModel((oldModel) => ({
-          ...oldModel,
-          [id]: { mode: GridRowModes.Edit, fieldToFocus: "description" },
-        }));
-    };
+  const apiRef = useGridApiContext();
 
-    const handleShortDurationFilter = () => {
-        const result = rows.filter((element: { duration: number; }) => element.duration < 30);
-        setRows(result);
-    }
+  const handleClick = () => {
+    const id = randomId();
+    setRows((oldRows) => [
+      ...oldRows,
+      { id, description: "", duration: "", isNew: true },
+    ]);
+    setRowModesModel((oldModel) => ({
+      ...oldModel,
+      [id]: { mode: GridRowModes.Edit, fieldToFocus: "description" },
+    }));
+  };
 
-    const handleMediumDurationFilter = () => {
-        const result = rows.filter((element: { duration: number; }) => element.duration > 30 || element.duration === 60);
-        setRows(result);
-    }
+  const handleShortDurationFilter = () => {
+    setSelectedFilter("SHORT")
+  };
 
-    const handleHighDurationFilter = () => {
-        const result = rows.filter((element: { duration: number; }) => element.duration > 60);
-        setRows(result);
-    }
-  
-    return (
-      <GridToolbarContainer>
-        <Button onClick={handleClick}>Add Row</Button>
-        <Button onClick={handleShortDurationFilter}>Filter short</Button>
-        <Button onClick={handleMediumDurationFilter}>Filter medium</Button>
-        <Button onClick={handleHighDurationFilter}>Filter high</Button>
-      </GridToolbarContainer>
-    );
-}
+  const handleMediumDurationFilter = () => {
+    setSelectedFilter("MEDIUM")
+  };
 
-export default CustomToolbar
+  const handleHighDurationFilter = () => {
+    setSelectedFilter("HIGH")
+  };
+
+  return (
+    <GridToolbarContainer>
+      <Button onClick={handleClick}>Add Row</Button>
+      <Button onClick={handleShortDurationFilter}>Filter short</Button>
+      <Button onClick={handleMediumDurationFilter}>Filter medium</Button>
+      <Button onClick={handleHighDurationFilter}>Filter high</Button>
+    </GridToolbarContainer>
+  );
+};
+
+export default TasksTableToolbar;
