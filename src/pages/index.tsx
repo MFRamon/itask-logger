@@ -21,7 +21,7 @@ import {
   randomId,
   randomArrayItem,
 } from "@mui/x-data-grid-generator";
-import { Task } from "@mui/icons-material";
+import { Padding, Task } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import CompletedTasksList from "@/components/CompletedTasksList/CompletedTasksList";
 import MetaHead from "@/components/MetaHead/MetaHead";
@@ -30,6 +30,7 @@ import { Grid } from "@mui/material";
 import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
 import TasksTableToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
+import Box from '@mui/material/Box';
 
 const roles = ["PENDING", "IN-PROGRESS", "PAUSED", "FINISHED", "RESET"];
 
@@ -153,7 +154,6 @@ export default function Home() {
       headerName: "Status",
       width: 100,
       editable: true,
-      // renderEditCell: TasksEditStatusCell,
       type: "singleSelect",
       valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
     },
@@ -242,19 +242,25 @@ export default function Home() {
   return (
     <>
       <MetaHead title={"Dashboard"}></MetaHead>
-      <main className={styles.main}>
-        <div className={styles.header}>
-          <LogoHeader></LogoHeader>
-        </div>
+      <Box className={styles.main} 
+        pr={{xl: 20, lg: 15, md: 10, sm: 2, xs: 0 }}
+        pl={{xl: 20, lg: 15, md: 10, sm: 2, xs: 0 }}
+        mt={{sm: 10, xs: 15}}
+        >
 
-        <div className={styles.subheader}>
-          <Grid container spacing={2}>
-            <Grid item lg={3} md={4} sm={12} xs={12}>
+        <Box className={styles.header}>
+          <LogoHeader></LogoHeader>
+        </Box>
+
+        <Box className={styles.subheader} mt={{sm: 10, xs: 10}}>
+          <Grid container spacing={2} padding={{xs: 2}}>
+            <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
               <SelectedTaskDetail
                 task={selectedTask as Task}
               ></SelectedTaskDetail>
             </Grid>
-            <Grid item lg={3} md={4} sm={12} xs={12}>
+
+            <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
               <Timer
                 rowId={id}
                 setRows={setRows}
@@ -268,52 +274,55 @@ export default function Home() {
               ></Timer>
             </Grid>
           </Grid>
-        </div>
+        </Box>
 
-        <Grid container spacing={2} className={styles.content}>
-          <Grid item lg={7} md={6}>
-            <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
-              <DataGrid
-                rows={rows.filter((row) => {
-                  switch (selectedFilter) {
-                    case "SHORT":
-                      return row.duration < 30;
-                    case "MEDIUM":
-                      return row.duration > 30 || row.duration === 60;
-                    case "NONE":
-                      return true;
-                    default:
-                      return true;
-                  }
-                })}
-                columns={columns}
-                editMode="row"
-                rowModesModel={rowModesModel}
-                onRowModesModelChange={handleRowModesModelChange}
-                onRowEditStop={handleRowEditStop}
-                onRowClick={handleRowClick}
-                processRowUpdate={processRowUpdate}
-                slots={{
-                  toolbar: (props) => (
-                    <TasksTableToolbar
-                      {...props}
-                      setSelectedFilter={setSelectedFilter}
-                    />
-                  ),
-                }}
-                sx={{ border: "0px" }}
+        <Box className={styles.content} mt={{sm: 10, xs: 5}}>
+          <Grid container direction={"column"} spacing={2} padding={{xs: 2}}>
+            <Grid item lg={7} md={6} sm={12} xs={12}>
+              <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
+                <DataGrid
+                  rows={rows.filter((row) => {
+                    switch (selectedFilter) {
+                      case "SHORT":
+                        return row.duration < 30;
+                      case "MEDIUM":
+                        return row.duration > 30 || row.duration === 60;
+                      case "NONE":
+                        return true;
+                      default:
+                        return true;
+                    }
+                  })}
+                  columns={columns}
+                  editMode="row"
+                  rowModesModel={rowModesModel}
+                  onRowModesModelChange={handleRowModesModelChange}
+                  onRowEditStop={handleRowEditStop}
+                  onRowClick={handleRowClick}
+                  processRowUpdate={processRowUpdate}
+                  slots={{
+                    toolbar: (props) => (
+                      <TasksTableToolbar
+                        {...props}
+                        setSelectedFilter={setSelectedFilter}
+                      />
+                    ),
+                  }}
+                  sx={{ border: "0px" }}
+                />
+              </Paper>
+            </Grid>
+            {/* <Grid item lg={5} md={6}>
+              <CompletedTasksList
+                completedTasks={rows.filter(
+                  (row) => row.status === STATUSES.FINISHED,
+                )}
               />
-            </Paper>
+            </Grid> */}
           </Grid>
-          <Grid item lg={5} md={6}>
-            <CompletedTasksList
-              completedTasks={rows.filter(
-                (row) => row.status === STATUSES.FINISHED,
-              )}
-            />
-          </Grid>
-        </Grid>
-      </main>
+        </Box>
+       
+      </Box>
     </>
   );
 }

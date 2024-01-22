@@ -8,17 +8,11 @@
     "subheader subheader subheader"
     "content content content";
   min-height: 100vh;
-  margin: 1.5rem;
-  padding: 1.5rem;
-}
-
-.subheader {
-  grid-area: subheader;
-  height: 200px;
+  /* margin: 1.5rem; */
+  /* padding: 1.5rem; */
 }
 
 .header {
-  /* background-color: blueviolet; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -26,15 +20,17 @@
   grid-area: header;
 }
 
-.sidebar {
-  /* background-color: aqua; */
+.subheader {
+  grid-area: subheader;
+  height: 200px;
   display: flex;
   flex-direction: column;
-  grid-area: sidebar;
+  justify-content: center;
 }
 
 .content {
   /* background-color: red; */
+  height: 500px;
   grid-area: content;
 }
 

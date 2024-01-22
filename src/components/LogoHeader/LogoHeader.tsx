@@ -16,8 +16,9 @@ const LogoHeader = (props: ILogoHeaderProps) => {
         direction={"row"}
         justifyContent={"space-between"}
         alignItems="center"
+        padding={{xs: 2}}
       >
-        <Grid item>
+        {/* <Grid item>
           <Image
             src="/memoji.svg"
             alt="Next.js Logo"
@@ -25,7 +26,7 @@ const LogoHeader = (props: ILogoHeaderProps) => {
             height={200}
             priority
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item>
           <Grid container direction={"column"}>
