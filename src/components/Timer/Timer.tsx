@@ -1,34 +1,41 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useCallback } from "react";
 import Button from "@mui/material/Button";
 import { Grid, Paper, Typography } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
 
-// interface ITimerPropos {
-//   duration: any;
-//   handleStart: () => void;
-//   handlePause: () => void;
-//   handleFinish: () => void;
-//   handleReset: () => void;
-// }
+interface ITimerPropos {
+  duration: any;
+  handleStart: () => void;
+  handlePause: () => void;
+  handleFinish: () => void;
+  handleReset: () => void;
+  minutes: number
+  // getMinutes: () => void
+}
 
-const STATUSES = {
+export const STATUSES = {
+  PENDING: "PENDING",
   STARTED: "IN-PROGRESS",
-  RESET: "PENDING",
-  PAUSED: "STOPPED",
+  RESET: "RESET",
+  PAUSED: "PAUSED",
   FINISHED: "FINISHED",
 };
 
 const Timer = (props: any) => {
-  const { duration, handleStart, handlePause, handleFinish, handleReset } = props;
+  const { duration, handleStart, handlePause, handleFinish, handleReset, getMinutes, minutes, setMinutes } =
+    props;
 
   // El valor de la inicializacion solo se ejecuta en el primer render.
-  // Agregar una columna de tiempo restante. 
-
+  // Agregar una columna de tiempo restante.
 
   const [time, setTime] = useState(duration);
-  const [minutes, setMinutes] = useState(duration);
+  
   const [seconds, setSeconds] = useState(0);
   const [flag, setFlag] = useState(false);
+  
+  // console.log(time);
+  // console.log(minutes);
+  // console.log(seconds);
 
   const handleTimerStart = () => {
     setFlag(true);
@@ -48,18 +55,21 @@ const Timer = (props: any) => {
   };
 
   const handleTimerFinish = () => {
-    //TODO: Marcar el timer a 0 cuando una tarea se termina
     setFlag(true);
     handleFinish(STATUSES.FINISHED, minutes);
   };
 
+  const updateCurrentTime = useCallback(() => {
+    getMinutes(minutes)
+  }, [getMinutes, minutes]);
+
   useEffect(() => {
-    // setMinutes(duration);
     if (flag) {
       const interval = setInterval(() => {
         if (seconds === 0 && minutes !== 0) {
           setSeconds((seconds) => seconds + 59);
           setMinutes((minutes: number) => minutes - 1);
+          // updateCurrentTime();
         } else if (seconds === 0 && minutes === 0) {
         } else {
           setSeconds((seconds) => seconds - 1);
@@ -72,8 +82,8 @@ const Timer = (props: any) => {
     } else {
       setMinutes(duration);
     }
-  }, [seconds, minutes, flag, duration]);
 
+  }, [seconds, minutes, flag, duration, updateCurrentTime]);
 
   return (
     <Fragment>

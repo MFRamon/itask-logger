@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -33,10 +31,12 @@ import CompletedTasksList from "@/components/CompletedTasksList/CompletedTasksLi
 import MetaHead from "@/components/MetaHead/MetaHead";
 import LogoHeader from "@/components/LogoHeader/LogoHeader";
 import { Grid } from "@mui/material";
-import Timer from "@/components/Timer/Timer";
+import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
+import CustomToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
+import TasksEditStatusCell from "@/components/TasksEditStatusCell/TasksEditStatusCell";
 
-const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
+const roles = ["PENDING", "IN-PROGRESS", "PAUSED", "FINISHED", "RESET"];
 
 const randomRole = () => {
   return randomArrayItem(roles);
@@ -45,92 +45,59 @@ const randomRole = () => {
 export interface Task {
   id: number;
   description: string;
-  duration: any;
+  duration: number;
   status: string;
+  timeToFinish: number;
 }
 
 const initialRows: GridRowsProp = [
   {
     id: randomId(),
     description: randomTraderName(),
-    // This represents the amount of minutes remaining for finishing the task
-    timeToFinish: 20,
-    finishedAt: 30,
     duration: 25,
     status: randomRole(),
-    creationDate: new Date(),
-    currentTime: 0
+    timeToFinish: 25,
   },
   {
     id: randomId(),
     description: randomTraderName(),
-    timeToFinish: 20,
-    finishedAt: 30,
     duration: 36,
     status: randomRole(),
-    creationDate: new Date(),
-    currentTime: 0
+    timeToFinish: 36
   },
 ];
 
-interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  setRowModesModel: (
-    newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
-  ) => void;
-}
-
-function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = randomId();
-    setRows((oldRows) => [
-      ...oldRows,
-      { id, description: "", duration: "", isNew: true },
-    ]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "description" },
-    }));
-  };
-
-  return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
-      </Button>
-    </GridToolbarContainer>
-  );
-}
-
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 const isTaskFinished = (task: any) => task.status === "FINISHED";
 
-const defaultTask: Task = { id: 0, description: "", duration: 0, status: "" };
+const initialSelectedTask: Task = { id: 0, description: "", duration: 0, status: "", timeToFinish: 0 };
 
 export default function Home() {
   const [rows, setRows] = useState(initialRows);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-  const [selectedTask, setSelectedTask] = useState(defaultTask);
+  
+  const [selectedTask, setSelectedTask] = useState(initialSelectedTask);
+  const [remainingMinutesSelectedTask, setRemainingMinutesSelectedTask] = useState(0);
+
+  const [minutes, setMinutes] = useState(0);
+
   const [finishedTaks, setFinishedTasks] = useState(
     rows.filter((task) => task.status === "FINISHED"),
   );
 
-  // const [selectedTaskTime, setSelectedTimeTask] = useState(); 
-
   useEffect(() => {
     const currentTask = rows.find((task) => task.id === selectedTask?.id);
-   if (!currentTask) {
-    setSelectedTask(defaultTask);
-   } else {
-    setSelectedTask({
-      id: currentTask?.id,
-      description: currentTask?.description,
-      duration: currentTask?.duration,
-      status: currentTask?.status,
-    });
-   }
+    if (!currentTask) {
+      setSelectedTask(initialSelectedTask);
+    } else {
+      setSelectedTask({
+        id: currentTask?.id,
+        description: currentTask?.description,
+        duration: currentTask?.duration,
+        status: currentTask?.status,
+        timeToFinish: currentTask?.duration - remainingMinutesSelectedTask
+      });
+    }
   }, [rows]);
 
   const handleRowEditStop: GridEventListener<"rowEditStop"> = (
@@ -180,12 +147,23 @@ export default function Home() {
   };
 
   const handleRowClick: GridEventListener<"rowClick"> = (params) => {
-    setSelectedTask({
-      id: params.row.id,
-      description: params.row.description,
-      duration: params.row.duration,
-      status: params.row.status,
-    });
+    if(params.row.status === STATUSES.PENDING){
+      setSelectedTask({
+        id: params.row.id,
+        description: params.row.description,
+        duration: params.row.duration,
+        status: params.row.status,
+        timeToFinish: params.row.duration
+      });
+    }else{
+      setSelectedTask({
+        id: params.row.id,
+        description: params.row.description,
+        duration: params.row.duration,
+        status: params.row.status,
+        timeToFinish: params.row.duration - remainingMinutesSelectedTask
+      });
+    }
   };
 
   const columns: GridColDef[] = [
@@ -207,8 +185,9 @@ export default function Home() {
     {
       field: "status",
       headerName: "Status",
-      width: 220,
+      width: 100,
       editable: true,
+      // renderEditCell: TasksEditStatusCell,
       type: "singleSelect",
       valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
     },
@@ -264,26 +243,40 @@ export default function Home() {
     },
   ];
 
-  // Handles the status of the selected task
   const onHandleChangeStatusTask = (operation: string, currentMinutes: any) => {
     console.log(operation);
     console.log(currentMinutes);
 
     const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
-        return { ...task, status: operation, duration: currentMinutes };
+        return { ...task, status: operation};
       }
       return task;
     });
 
-    if(operation === 'STOPPED'){
+    if (operation === "PAUSED") {
       console.log("se pauso la tarea");
       console.log(modifiedTasks);
     }
 
     setRows(modifiedTasks);
     setFinishedTasks(modifiedTasks.filter(isTaskFinished));
+    // onHandleUpdateTime(currentMinutes);
   };
+
+  const onHandleUpdateTime = (remainingMinutes: number) => {
+    console.log(`Tiempo que viene del counter ${remainingMinutes}`);
+    setRemainingMinutesSelectedTask(remainingMinutes);
+
+    setSelectedTask({...selectedTask, timeToFinish: remainingMinutes});
+
+    console.log(selectedTask);
+  }
+
+  useEffect(() => {
+    setRemainingMinutesSelectedTask(minutes);
+    setSelectedTask({...selectedTask, timeToFinish: remainingMinutesSelectedTask});
+  },[minutes, remainingMinutesSelectedTask])
 
   return (
     <>
@@ -302,10 +295,13 @@ export default function Home() {
               {selectedTask && (
                 <Timer
                   duration={selectedTask.duration}
+                  minutes={minutes}
+                  setMinutes={setMinutes}
                   handleStart={onHandleChangeStatusTask}
                   handlePause={onHandleChangeStatusTask}
                   handleReset={onHandleChangeStatusTask}
                   handleFinish={onHandleChangeStatusTask}
+                  getMinutes={onHandleUpdateTime}
                 ></Timer>
               )}
             </Grid>
@@ -325,10 +321,10 @@ export default function Home() {
                 onRowClick={handleRowClick}
                 processRowUpdate={processRowUpdate}
                 slots={{
-                  toolbar: EditToolbar,
+                  toolbar: CustomToolbar,
                 }}
                 slotProps={{
-                  toolbar: { setRows, setRowModesModel },
+                  toolbar: { setRows, setRowModesModel, rows },
                 }}
                 sx={{ border: "0px" }}
               />
