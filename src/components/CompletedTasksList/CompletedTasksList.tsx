@@ -19,6 +19,8 @@ import {
   randomArrayItem,
   randomDate,
 } from "@mui/x-data-grid-generator";
+import { PieChart } from '@mui/x-charts/PieChart';
+
 
 const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
 
@@ -49,6 +51,18 @@ const mockData: GridRowsProp = [
     status: randomRole(),
     creationDate: new Date(),
   },
+];
+
+// Numbero de tareas terminadas 
+const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
+const xLabels = [
+  'Page A',
+  'Page B',
+  'Page C',
+  'Page D',
+  'Page E',
+  'Page F',
+  'Page G',
 ];
 
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
@@ -82,7 +96,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
           </Grid>
 
           {/* Chart for Data */}
-          <Grid item>
+          <Grid item >
             <Paper
               id={"paper-containe-chart"}
               className={styles.chart}
@@ -90,16 +104,13 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
             >
               {/* Line Chart for Finished Tasks */}
               <Grid item>
-                <LineChart
-                  xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+              <LineChart
+                  width={400}
+                  height={300}
                   series={[
-                    {
-                      data: [2, 5.5, 2, 8.5, 1.5, 5],
-                      area: true,
-                    },
+                    { data: pData, label: 'pv' },
                   ]}
-                  width={300}
-                  height={200}
+                  xAxis={[{ scaleType: 'point', data: xLabels }]}
                 />
               </Grid>
             </Paper>

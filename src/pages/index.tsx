@@ -19,7 +19,6 @@ import {
 import {
   randomTraderName,
   randomId,
-  randomArrayItem,
 } from "@mui/x-data-grid-generator";
 import { Task } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
@@ -365,16 +364,15 @@ export default function Home() {
                 />
               </Paper>
             </Grid>
-            {/* <Grid item  xs={12} sm={12} md={6} lg={5} xl={6}  >
+            <Grid item  xs={12} sm={12} md={6} lg={5} xl={6}  >
               <CompletedTasksList
                 completedTasks={rows.filter(
                   (row) => row.status === STATUSES.FINISHED,
                 )}
               />
-            </Grid> */}
+            </Grid>
           </Grid>
         </Box>
-       
       </Box>
     </>
   );
