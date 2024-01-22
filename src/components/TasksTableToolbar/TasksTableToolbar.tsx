@@ -26,7 +26,7 @@ interface EditToolbarProps {
 }
 
 const TasksTableToolbar = (props: EditToolbarProps) => {
-  const { setRows, setRowModesModel, rows, setSelectedFilter} = props;
+  const { setRows, setRowModesModel, rows, setSelectedFilter } = props;
 
   const apiRef = useGridApiContext();
 
@@ -43,15 +43,15 @@ const TasksTableToolbar = (props: EditToolbarProps) => {
   };
 
   const handleShortDurationFilter = () => {
-    setSelectedFilter("SHORT")
+    setSelectedFilter("SHORT");
   };
 
   const handleMediumDurationFilter = () => {
-    setSelectedFilter("MEDIUM")
+    setSelectedFilter("MEDIUM");
   };
 
   const handleHighDurationFilter = () => {
-    setSelectedFilter("HIGH")
+    setSelectedFilter("HIGH");
   };
 
   return (

@@ -57,7 +57,6 @@ const Timer = (props: any) => {
     handleFinish(STATUSES.FINISHED, minutes);
   };
 
-
   useEffect(() => {
     if (active) {
       const interval = setInterval(() => {

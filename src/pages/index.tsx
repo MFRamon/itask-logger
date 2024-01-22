@@ -118,7 +118,7 @@ export default function Home() {
     console.log(newRow);
     console.log("Termino el update");
     const updatedRow = { ...newRow, isNew: false };
-    console.log({...newRow})
+    console.log({ ...newRow });
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -228,12 +228,13 @@ export default function Home() {
     }
 
     if (operation === "FINISHED") {
-      selectedRow.completedTime = selectedRow.duration - selectedRow.timeToFinish;
+      selectedRow.completedTime =
+        selectedRow.duration - selectedRow.timeToFinish;
       selectedRow.finishedDate = new Date();
     }
-    
-      const rowIndex = modifiedTasks.findIndex((row) => row.id === id);
-      modifiedTasks.splice(rowIndex, 1, selectedRow);
+
+    const rowIndex = modifiedTasks.findIndex((row) => row.id === id);
+    modifiedTasks.splice(rowIndex, 1, selectedRow);
 
     setRows(modifiedTasks);
   };
@@ -274,11 +275,15 @@ export default function Home() {
             <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
               <DataGrid
                 rows={rows.filter((row) => {
-                  switch(selectedFilter) {
-                    case "SHORT": return row.duration < 30
-                    case "MEDIUM": return row.duration > 30 || row.duration === 60
-                    case "NONE":  return true
-                    default: return true;
+                  switch (selectedFilter) {
+                    case "SHORT":
+                      return row.duration < 30;
+                    case "MEDIUM":
+                      return row.duration > 30 || row.duration === 60;
+                    case "NONE":
+                      return true;
+                    default:
+                      return true;
                   }
                 })}
                 columns={columns}
@@ -289,14 +294,23 @@ export default function Home() {
                 onRowClick={handleRowClick}
                 processRowUpdate={processRowUpdate}
                 slots={{
-                  toolbar: (props) => <TasksTableToolbar {...props} setSelectedFilter={setSelectedFilter} />,
+                  toolbar: (props) => (
+                    <TasksTableToolbar
+                      {...props}
+                      setSelectedFilter={setSelectedFilter}
+                    />
+                  ),
                 }}
                 sx={{ border: "0px" }}
               />
             </Paper>
           </Grid>
           <Grid item lg={5} md={6}>
-            <CompletedTasksList completedTasks={rows.filter((row) => row.status === STATUSES.FINISHED)} />
+            <CompletedTasksList
+              completedTasks={rows.filter(
+                (row) => row.status === STATUSES.FINISHED,
+              )}
+            />
           </Grid>
         </Grid>
       </main>
