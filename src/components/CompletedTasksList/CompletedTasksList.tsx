@@ -62,8 +62,7 @@ const xLabels = [
 
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
-  const [weekDays, setWeekDays] = useState<any>()
-
+  
   const { completedTasks = mockData } = props;
 
   const dates = (startDate: Date, num: number) => Array.from(
@@ -81,12 +80,13 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const getCountOfFinishedTasks = () => {
     let date = new Date();
     date.setDate(date.getDate() - date.getDay() - 6);
-    dates(date, 7)
-    const count = completedTasks.filter((e) => e.finishedDate === weekDays)
-    console.log(count);
-  }
+    const weekDays = dates(date, 7);
 
-  // console.log(lastWeek());
+
+    console.log(completedTasks);
+    console.log(new Date(completedTasks[0].finishedDate).toISOString().split('T')[0].toString());
+    console.log(weekDays);
+  }
 
   useEffect(() => {
     setDomLoaded(true);

@@ -58,7 +58,7 @@ const initialRows: GridRowsProp = [
     status: "FINISHED",
     timeToFinish: 36,
     creationDate: new Date(),
-    finishedDate: new Date(),
+    finishedDate: new Date(Date.now() - 86400000),
     completedTime: 0,
   },
   {
@@ -78,7 +78,7 @@ const initialRows: GridRowsProp = [
     status: "FINISHED",
     timeToFinish: 36,
     creationDate: new Date(),
-    finishedDate: new Date(),
+    finishedDate: new Date(Date.now() - 86400000),
     completedTime: 0,
   },
   {
