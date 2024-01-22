@@ -31,12 +31,7 @@ import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
 import TasksTableToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
 import Box from '@mui/material/Box';
-
-const roles = ["PENDING", "IN-PROGRESS", "PAUSED", "FINISHED", "RESET"];
-
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
+import TasksFilter from "@/components/TasksFilter/TasksFilter";
 
 export interface Task {
   id: number;
@@ -60,6 +55,46 @@ const initialRows: GridRowsProp = [
   {
     id: randomId(),
     description: randomTraderName(),
+    duration: 69,
+    status: "FINISHED",
+    timeToFinish: 36,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
+  },
+  {
+    id: randomId(),
+    description: randomTraderName(),
+    duration: 25,
+    status: "PENDING",
+    timeToFinish: 25,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
+  },
+  {
+    id: randomId(),
+    description: randomTraderName(),
+    duration: 78,
+    status: "FINISHED",
+    timeToFinish: 36,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
+  },
+  {
+    id: randomId(),
+    description: randomTraderName(),
+    duration: 25,
+    status: "PENDING",
+    timeToFinish: 25,
+    creationDate: new Date(),
+    finishedDate: new Date(),
+    completedTime: 0,
+  },
+  {
+    id: randomId(),
+    description: randomTraderName(),
     duration: 36,
     status: "FINISHED",
     timeToFinish: 36,
@@ -68,9 +103,6 @@ const initialRows: GridRowsProp = [
     completedTime: 0,
   },
 ];
-
-// const inter = Inter({ subsets: ["latin"] });
-const isTaskFinished = (task: any) => task.status === "FINISHED";
 
 export default function Home() {
   const [rows, setRows] = useState(initialRows);
@@ -116,10 +148,7 @@ export default function Home() {
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    console.log(newRow);
-    console.log("Termino el update");
     const updatedRow = { ...newRow, isNew: false };
-    console.log({ ...newRow });
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -239,6 +268,23 @@ export default function Home() {
     setRows(modifiedTasks);
   };
 
+
+  //TODO: To check usage in readonly data
+  const handleFilteredRows = () => {
+    return rows.filter((row) => {
+      switch (selectedFilter) {
+        case "SHORT":
+          return row.duration < 30;
+        case "MEDIUM":
+          return row.duration > 30 || row.duration === 60;
+        case "HIGH":
+          return true;
+        default:
+          return true;
+      }
+    })
+  }
+
   return (
     <>
       <MetaHead title={"Dashboard"}></MetaHead>
@@ -273,6 +319,10 @@ export default function Home() {
                 handleFinish={onHandleChangeStatusTask}
               ></Timer>
             </Grid>
+
+            <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
+              <TasksFilter setSelectedFilter={setSelectedFilter} title="Filters" count={20}></TasksFilter>
+            </Grid>
           </Grid>
         </Box>
 
@@ -287,7 +337,7 @@ export default function Home() {
                         return row.duration < 30;
                       case "MEDIUM":
                         return row.duration > 30 || row.duration === 60;
-                      case "NONE":
+                      case "HIGH":
                         return true;
                       default:
                         return true;
@@ -308,17 +358,20 @@ export default function Home() {
                       />
                     ),
                   }}
+                  slotProps={{
+                    toolbar: { setRows, setRowModesModel, rows },
+                  }}
                   sx={{ border: "0px" }}
                 />
               </Paper>
             </Grid>
-            <Grid item  xs={12} sm={12} md={6} lg={5} xl={6}  >
+            {/* <Grid item  xs={12} sm={12} md={6} lg={5} xl={6}  >
               <CompletedTasksList
                 completedTasks={rows.filter(
                   (row) => row.status === STATUSES.FINISHED,
                 )}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
        

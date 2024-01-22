@@ -42,24 +42,9 @@ const TasksTableToolbar = (props: EditToolbarProps) => {
     }));
   };
 
-  const handleShortDurationFilter = () => {
-    setSelectedFilter("SHORT");
-  };
-
-  const handleMediumDurationFilter = () => {
-    setSelectedFilter("MEDIUM");
-  };
-
-  const handleHighDurationFilter = () => {
-    setSelectedFilter("HIGH");
-  };
-
   return (
     <GridToolbarContainer>
       <Button onClick={handleClick}>Add Row</Button>
-      <Button onClick={handleShortDurationFilter}>Filter short</Button>
-      <Button onClick={handleMediumDurationFilter}>Filter medium</Button>
-      <Button onClick={handleHighDurationFilter}>Filter high</Button>
     </GridToolbarContainer>
   );
 };
