@@ -34,9 +34,8 @@ const mockData: GridRowsProp = [
   {
     id: 1,
     description: randomTraderName(),
-    // This represents the amount of minutes remaining for finishing the task
     timeToFinish: 20,
-    finishedAt: 30,
+    // finishedAt: 30,
     duration: 25,
     status: randomRole(),
     creationDate: new Date(),
@@ -44,8 +43,8 @@ const mockData: GridRowsProp = [
   {
     id: 2,
     description: randomTraderName(),
-    timeToFinish: 20,
-    finishedAt: 30,
+    // timeToFinish: 20,
+    // finishedAt: 30,
     duration: 36,
     status: randomRole(),
     creationDate: new Date(),
@@ -61,7 +60,6 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
     setDomLoaded(true);
   }, []);
 
-  // console.log(completedTasks);
 
   return (
     <Fragment>
@@ -145,7 +143,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
 
                       <Grid item>
                         <Grid container flexDirection={"row"}>
-                          <ListItemText primary={`${task.duration} minutos`} />
+                          <ListItemText primary={`${task.duration} minutes`} />
                         </Grid>
                       </Grid>
                     </ListItem>

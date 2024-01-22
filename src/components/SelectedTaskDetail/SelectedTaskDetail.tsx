@@ -8,7 +8,9 @@ interface ISelectedTaskDetailProps {
 }
 
 const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
-  const { description, duration, status } = props.task || {};
+  const { description, duration, status, timeToFinish } = props.task || {};
+
+  console.log(timeToFinish)
 
   return (
     <Fragment>
@@ -17,17 +19,30 @@ const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
         className={styles.itemContainer}
         sx={{ height: "142px", minHeight: "142px" }}
       >
-        <Typography variant="h6">Selected Task:</Typography>
         <Grid container direction={"column"}>
-          <Grid item>
-            <Typography variant="body1">{`Description:  ${description}`}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="body1">{`Duration:  ${duration} minutes`}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="body1">{`Status:  ${status}`}</Typography>
-          </Grid>
+          {props.task.description !== "" ? (
+            <Fragment>
+              <Typography variant="h6">Selected Task:</Typography>
+              <Grid item>
+                <Typography variant="body1">{`Description:  ${description}`}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">{`Status:  ${status}`}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">{`Duration:  ${duration} minutes`}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="body1">{`Remaining minutes: ${timeToFinish}`}</Typography>
+              </Grid>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <Grid item>
+                <Typography variant="body1">{"No task selected"}</Typography>
+              </Grid>
+            </Fragment>
+          )}
         </Grid>
       </Paper>
     </Fragment>
