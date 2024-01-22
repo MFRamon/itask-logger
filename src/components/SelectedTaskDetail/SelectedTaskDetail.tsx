@@ -8,7 +8,7 @@ interface ISelectedTaskDetailProps {
 }
 
 const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
-  const { id, description, duration, status, timeToFinish } = props.task || {};
+  const { description, duration, status, timeToFinish } = props.task || {};
 
   return (
     <Fragment>

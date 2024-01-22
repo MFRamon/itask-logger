@@ -1,11 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { GridRowsProp } from "@mui/x-data-grid";
 import Grid from "@mui/material/Grid";
 import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "@/components/CompletedTasksList/CompletedTasksList.module.css";
-
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
@@ -13,13 +12,9 @@ import ListItemText from "@mui/material/ListItemText";
 import Chip from "@mui/material/Chip";
 
 import {
-  randomCreatedDate,
   randomTraderName,
-  randomId,
   randomArrayItem,
-  randomDate,
 } from "@mui/x-data-grid-generator";
-import { PieChart } from '@mui/x-charts/PieChart';
 
 
 const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
@@ -67,12 +62,36 @@ const xLabels = [
 
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
+  const [weekDays, setWeekDays] = useState<any>()
 
   const { completedTasks = mockData } = props;
 
+  const dates = (startDate: Date, num: number) => Array.from(
+    { length: num },
+    (_, i) => new Date(startDate.getTime() + (i * 60000 * 60 * 24)).toISOString().slice(0, 10)
+  );
+
+  // const lastWeek = () => {
+  //   let date = new Date();
+  //   date.setDate(date.getDate() - date.getDay() - 6);
+  //   dates(date, 7)
+  // }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getCountOfFinishedTasks = () => {
+    let date = new Date();
+    date.setDate(date.getDate() - date.getDay() - 6);
+    dates(date, 7)
+    const count = completedTasks.filter((e) => e.finishedDate === weekDays)
+    console.log(count);
+  }
+
+  // console.log(lastWeek());
+
   useEffect(() => {
     setDomLoaded(true);
-  }, []);
+    getCountOfFinishedTasks();
+  }, [getCountOfFinishedTasks]);
 
   return (
     <Fragment>
@@ -156,7 +175,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                         <Grid container flexDirection={"row"}>
                           <ListItemText
                             primary={`${task.completedTime} minutes`}
-                            secondary={task.finishedDate.toString()}
+                            secondary={task.finishedDate.toISOString()}
                           />
                         </Grid>
                       </Grid>

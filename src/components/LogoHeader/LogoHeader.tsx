@@ -1,14 +1,18 @@
 import React, { Fragment } from "react";
-import Image from "next/image";
 import Typography from "@mui/material/Typography";
-import styles from "@/components/LogoHeader/LogoHeader.module.css";
-import { Grid, Paper } from "@mui/material";
+import { Grid } from "@mui/material";
 
-interface ILogoHeaderProps {
-  //TODO: To difine interface
-}
 
-const LogoHeader = (props: ILogoHeaderProps) => {
+const LogoHeader = () =>  {
+
+  const getTodaysDate = () => {
+    const f = new Intl.DateTimeFormat('es-MX',{
+      dateStyle: 'full'
+    })
+    const formattedDate = f.format(new Date());
+    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+  }
+
   return (
     <Fragment>
       <Grid
@@ -31,7 +35,7 @@ const LogoHeader = (props: ILogoHeaderProps) => {
         <Grid item>
           <Grid container direction={"column"}>
             <Grid item>
-              <Typography variant="body1">{"19 de Enero del 2024"}</Typography>
+              <Typography variant="body1">{getTodaysDate()}</Typography>
             </Grid>
 
             <Grid item>
