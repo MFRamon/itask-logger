@@ -254,13 +254,13 @@ export default function Home() {
 
         <Box className={styles.subheader} mt={{sm: 10, xs: 10}}>
           <Grid container spacing={2} padding={{xs: 2}}>
-            <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+            <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
               <SelectedTaskDetail
                 task={selectedTask as Task}
               ></SelectedTaskDetail>
             </Grid>
 
-            <Grid item xl={4} lg={4} md={4} sm={12} xs={12}>
+            <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
               <Timer
                 rowId={id}
                 setRows={setRows}
