@@ -297,7 +297,7 @@ export default function Home() {
           <LogoHeader></LogoHeader>
         </Box>
 
-        <Box className={styles.subheader} mt={{sm: 10, xs: 10}}>
+        <Box className={styles.subheader} mt={{xs: 0, sm: 0, lg: 0, xl: 0}}>
           <Grid container spacing={2} padding={{xs: 2}}>
             <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
               <SelectedTaskDetail
@@ -325,7 +325,7 @@ export default function Home() {
           </Grid>
         </Box>
 
-        <Box id={"content-container"} className={styles.content} mt={{xs: 0, sm: 10}}>
+        <Box id={"content-container"} className={styles.content} mt={{xs: 0, sm: 0, lg: 0, xl: 0}}>
           <Grid container spacing={2} padding={{xs: 2}} sx={{minHeight: '500px'}}>
             <Grid item xs={12} sm={12} md={6} lg={7} xl={6}>
               <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
