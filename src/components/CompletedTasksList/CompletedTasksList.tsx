@@ -148,7 +148,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                         <Grid container flexDirection={"row"}>
                           <ListItemText
                             primary={`${task.completedTime} minutes`}
-                            secondary={task.finishedDate.toISOString()}
+                            secondary={task.finishedDate.toISOString().slice(0, 10)}
                           />
                         </Grid>
                       </Grid>
