@@ -4,7 +4,7 @@ import React, { Fragment } from "react";
 import styles from "@/components/SelectedTaskDetail/SelectedTaskDetail.module.css";
 
 interface ISelectedTaskDetailProps {
-  task: Task | undefined;
+  task?: Task | undefined;
 }
 
 const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
