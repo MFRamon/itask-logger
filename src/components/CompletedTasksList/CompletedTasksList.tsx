@@ -69,7 +69,6 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   return (
     <Fragment>
       <Paper
-        sx={{ minWidth: 275, minHeight: 500 }}
         className={styles.cardContainer}
         elevation={0}
       >
@@ -97,7 +96,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               {/* Line Chart for Finished Tasks */}
               <Grid item>
               <LineChart
-                  width={500}
+                  width={300}
                   height={300}
                   series={[
                     { data: finalDatesArray, label: 'Finished Tasks' },
@@ -144,7 +143,6 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                         </Grid>
                       </Grid>
 
-                      {/* Le tomo x minutos */}
                       <Grid item>
                         <Grid container flexDirection={"row"}>
                           <ListItemText
