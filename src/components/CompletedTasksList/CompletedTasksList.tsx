@@ -53,17 +53,13 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
         })
     })
     
-    console.log(finalDatesArray);
     return [weekDays, finalDatesArray]
   }
 
   const [weekDays, finalDatesArray] = getCountOfFinishedTasks();
 
-  console.log(finalDatesArray);
-
   useEffect(() => {
     setDomLoaded(true);
-    //getCountOfFinishedTasks();
   }, []);
 
   return (

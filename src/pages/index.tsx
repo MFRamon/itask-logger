@@ -122,7 +122,6 @@ export default function Home() {
   };
 
   const handleEditClick = (id: GridRowId) => () => {
-    console.log({ ...rowModesModel });
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 
@@ -242,9 +241,6 @@ export default function Home() {
   ];
 
   const onHandleChangeStatusTask = (operation: string, currentMinutes: any) => {
-    console.log(operation);
-    console.log(currentMinutes);
-
     const modifiedTasks = rows.map((task) => {
       if (task.id === selectedTask?.id) {
         return { ...task, status: operation };
