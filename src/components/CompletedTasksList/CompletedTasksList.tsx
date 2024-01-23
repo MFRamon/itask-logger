@@ -139,6 +139,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                           <Chip
                             sx={{ borderRadius: "8px" }}
                             label={task.status}
+                            color="success"
                           />
                         </Grid>
                       </Grid>
