@@ -144,8 +144,8 @@ const Timer = (props: any) => {
             <Grid
               container
               direction={"row"}
-              justifyContent={"space-between"}
-              spacing={1}
+              gap={1}
+              justifyContent={"flex-start"}
             >
               {selectedTask?.status === STATUSES.PENDING ||
               selectedTask?.status === STATUSES.PAUSED ||
@@ -189,6 +189,7 @@ const Timer = (props: any) => {
               </Button>
             </Grid>
           </Grid>
+          
         </Grid>
       </Paper>
     </Fragment>

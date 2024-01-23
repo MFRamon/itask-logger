@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 import styles from "@/components/SelectedTaskDetail/SelectedTaskDetail.module.css";
-import Button from '@mui/material/Button';
+import { Chip } from '@mui/material';
 
 interface ITasksCountProps {
   title: string;
@@ -30,26 +30,52 @@ const TasksFilter = (props: ITasksCountProps) => {
   return (
     <Fragment>
       <Paper elevation={0} className={styles.itemContainer}  sx={{ height: "142px", minHeight: "142px" }}>
-        <Grid container direction={"row"}>
+        <Grid container direction={"column"} sx={{ minHeight: "105px" }} justifyContent={"space-between"}>
+
           <Grid item>
             <Typography variant="h6">{title}</Typography>
           </Grid>
+
           <Grid item>
-            <Typography variant="body1">{"Filter the rows with the corresponding data"}</Typography>
+            <Typography variant="body1" gutterBottom>{"Filter the tasks by their duration"}</Typography>
           </Grid>
+
           <Grid item>
-            <Button size="small" variant="outlined" onClick={handleShortDurationFilter}>Short</Button>
+            <Grid container direction={"row"}  gap={1} justifyContent={"flex-start"}>
+              <Grid item>
+                <Chip
+                  sx={{ borderRadius: "8px" }}
+                  label={"Short"}
+                  onClick={handleShortDurationFilter}
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  sx={{ borderRadius: "8px" }}
+                  label={"Medium"}
+                  onClick={handleMediumDurationFilter}
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  sx={{ borderRadius: "8px" }}
+                  label={"High"}
+                  onClick={handleHighDurationFilter}
+                />
+              </Grid>
+              <Grid item>
+                <Chip
+                  sx={{ borderRadius: "8px" }}
+                  label={"Reset"}
+                  onClick={handleResetFilter}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button size="small" variant="outlined" onClick={handleMediumDurationFilter}>Medium</Button>
-          </Grid>
-          <Grid item>
-            <Button size="small" variant="outlined" onClick={handleHighDurationFilter}>Long</Button>
-          </Grid>
-          <Grid item>
-            <Button size="small" variant="outlined" onClick={handleResetFilter}>Reset</Button>
-          </Grid>
+
+
         </Grid>
+
       </Paper>
     </Fragment>
   );
