@@ -9,7 +9,7 @@ interface ITasksCountProps {
   setSelectedFilter: (filterName: string) => void;
 }
 
-const TasksFilter = (props: ITasksCountProps) => {
+const TasksFilters = (props: ITasksCountProps) => {
   const { title, setSelectedFilter } = props || {};
 
   const handleShortDurationFilter = () => {
@@ -84,4 +84,4 @@ const TasksFilter = (props: ITasksCountProps) => {
   );
 };
 
-export default TasksFilter;
+export default TasksFilters;

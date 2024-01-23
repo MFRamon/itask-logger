@@ -30,7 +30,7 @@ import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
 import TasksTableToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
 import Box from '@mui/material/Box';
-import TasksFilter from "@/components/TasksFilter/TasksFilter";
+import TasksFilters from "@/components/TasksFilters/TasksFilters";
 
 export interface Task {
   id: number;
@@ -324,7 +324,7 @@ export default function Home() {
             </Grid>
 
             <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
-              <TasksFilter setSelectedFilter={setSelectedFilter} title="Filters:" ></TasksFilter>
+              <TasksFilters setSelectedFilter={setSelectedFilter} title="Filters:" ></TasksFilters>
             </Grid>
           </Grid>
         </Box>
