@@ -167,6 +167,7 @@ export default function Home() {
       headerName: "Description",
       width: 180,
       editable: true,
+      flex: 1 
     },
     {
       field: "duration",
@@ -176,6 +177,7 @@ export default function Home() {
       align: "left",
       headerAlign: "left",
       editable: true,
+      flex: 1
     },
     {
       field: "status",
@@ -184,12 +186,14 @@ export default function Home() {
       editable: true,
       type: "singleSelect",
       valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
+      flex: 1
     },
     {
       field: "actions",
       type: "actions",
       headerName: "Actions",
       width: 100,
+      flex: 1,
       cellClassName: "actions",
       getActions: ({ id }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
