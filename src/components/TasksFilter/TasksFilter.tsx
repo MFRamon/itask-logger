@@ -2,6 +2,7 @@ import { Grid, Paper, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 import styles from "@/components/SelectedTaskDetail/SelectedTaskDetail.module.css";
 import { Chip } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface ITasksCountProps {
   title: string;
@@ -67,6 +68,8 @@ const TasksFilter = (props: ITasksCountProps) => {
                 <Chip
                   sx={{ borderRadius: "8px" }}
                   label={"Reset"}
+                  color="error"
+                  icon={<ClearIcon/>}
                   onClick={handleResetFilter}
                 />
               </Grid>
