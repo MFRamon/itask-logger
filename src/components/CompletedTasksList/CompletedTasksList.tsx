@@ -27,54 +27,16 @@ interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
 }
 
-const mockData: GridRowsProp = [
-  {
-    id: 1,
-    description: randomTraderName(),
-    timeToFinish: 20,
-    // finishedAt: 30,
-    duration: 25,
-    status: randomRole(),
-    creationDate: new Date(),
-  },
-  {
-    id: 2,
-    description: randomTraderName(),
-    // timeToFinish: 20,
-    // finishedAt: 30,
-    duration: 36,
-    status: randomRole(),
-    creationDate: new Date(),
-  },
-];
-
-// Numbero de tareas terminadas 
-const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
-const xLabels = [
-  'Page A',
-  'Page B',
-  'Page C',
-  'Page D',
-  'Page E',
-  'Page F',
-  'Page G',
-];
 
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
   
-  const { completedTasks = mockData } = props;
+  const { completedTasks  } = props;
 
   const dates = (startDate: Date, num: number) => Array.from(
     { length: num },
-    (_, i) => new Date(startDate.getTime() + (i * 60000 * 60 * 24)).toISOString().slice(0, 10)
+    (_, i) =>  new Date(startDate.getTime() + (i * 60000 * 60 * 24)).toISOString().slice(8, 10)
   );
-
-  // const lastWeek = () => {
-  //   let date = new Date();
-  //   date.setDate(date.getDate() - date.getDay() - 6);
-  //   dates(date, 7)
-  // }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCountOfFinishedTasks = () => {
@@ -82,16 +44,27 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
     date.setDate(date.getDate() - date.getDay() - 6);
     const weekDays = dates(date, 7);
 
-
-    console.log(completedTasks);
-    console.log(new Date(completedTasks[0].finishedDate).toISOString().split('T')[0].toString());
-    console.log(weekDays);
+    const finalDatesArray: any = new Array(weekDays.length).fill(0);
+    completedTasks.forEach((task) => {
+        weekDays.forEach((day, index) => {
+          if (task.finishedDate.toISOString().slice(8, 10) === day) {
+              finalDatesArray[index] += 1;
+          }
+        })
+    })
+    
+    console.log(finalDatesArray);
+    return [weekDays, finalDatesArray]
   }
+
+  const [weekDays, finalDatesArray] = getCountOfFinishedTasks();
+
+  console.log(finalDatesArray);
 
   useEffect(() => {
     setDomLoaded(true);
-    getCountOfFinishedTasks();
-  }, [getCountOfFinishedTasks]);
+    //getCountOfFinishedTasks();
+  }, []);
 
   return (
     <Fragment>
@@ -124,12 +97,12 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               {/* Line Chart for Finished Tasks */}
               <Grid item>
               <LineChart
-                  width={400}
+                  width={500}
                   height={300}
                   series={[
-                    { data: pData, label: 'pv' },
+                    { data: finalDatesArray, label: 'Finished Tasks' },
                   ]}
-                  xAxis={[{ scaleType: 'point', data: xLabels }]}
+                  xAxis={[{ scaleType: 'point', data: weekDays }]}
                 />
               </Grid>
             </Paper>
@@ -147,6 +120,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               }}
             >
               <List
+              key={2}
                 sx={{
                   overflow: "auto",
                   maxHeight: 200,
@@ -154,7 +128,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               >
                 {completedTasks.map((task, id) => (
                   <>
-                    <ListItem id={"1"} alignItems="flex-start">
+                    <ListItem key={id} alignItems="flex-start">
                       <Grid
                         container
                         flexDirection={"column"}

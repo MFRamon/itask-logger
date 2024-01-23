@@ -5,12 +5,11 @@ import Button from '@mui/material/Button';
 
 interface ITasksCountProps {
   title: string;
-  count: number;
   setSelectedFilter: (filterName: string) => void;
 }
 
 const TasksFilter = (props: ITasksCountProps) => {
-  const { title, count, setSelectedFilter } = props || {};
+  const { title, setSelectedFilter } = props || {};
 
   const handleShortDurationFilter = () => {
     setSelectedFilter("SHORT");

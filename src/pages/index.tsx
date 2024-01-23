@@ -83,12 +83,12 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Ramon",
     duration: 25,
-    status: "PENDING",
+    status: "FINISHED",
     timeToFinish: 25,
     creationDate: new Date(),
-    finishedDate: new Date(),
+    finishedDate: new Date("2024-01-18"),
     completedTime: 0,
   },
   {
@@ -320,7 +320,7 @@ export default function Home() {
             </Grid>
 
             <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
-              <TasksFilter setSelectedFilter={setSelectedFilter} title="Filters" count={20}></TasksFilter>
+              <TasksFilter setSelectedFilter={setSelectedFilter} title="Filters" ></TasksFilter>
             </Grid>
           </Grid>
         </Box>
