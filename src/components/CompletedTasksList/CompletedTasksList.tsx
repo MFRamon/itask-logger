@@ -96,7 +96,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               {/* Line Chart for Finished Tasks */}
               <Grid item>
               <LineChart
-                  width={400}
+                  width={300}
                   height={300}
                   series={[
                     { data: finalDatesArray, label: 'Finished Tasks' },
