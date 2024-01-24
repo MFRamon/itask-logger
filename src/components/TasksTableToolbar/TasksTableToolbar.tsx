@@ -22,10 +22,10 @@ const TasksTableToolbar = (props: EditToolbarProps) => {
   const { setRows, setRowModesModel, rows, setSelectedFilter } = props;
 
   const handleClick = () => {
-    const id = randomId();
+    const id: any = randomId();
     setRows((oldRows) => [
       ...oldRows,
-      { id, description: "", duration: "", isNew: true },
+      { id, description: "", duration: "", status: 'PENDING', isNew: true },
     ]);
     setRowModesModel((oldModel) => ({
       ...oldModel,

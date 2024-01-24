@@ -167,7 +167,7 @@ export default function Home() {
     },
     {
       field: "duration",
-      headerName: "Duration",
+      headerName: "Duration (mins)",
       type: "number",
       width: 80,
       align: "left",
@@ -179,7 +179,7 @@ export default function Home() {
       field: "status",
       headerName: "Status",
       width: 100,
-      editable: true,
+      editable: false,
       type: "singleSelect",
       valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
       flex: 1,
