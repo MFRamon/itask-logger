@@ -264,7 +264,6 @@ export default function Home() {
     setRows(modifiedTasks);
   };
 
-  //TODO: To check usage in readonly data
   const handleFilteredRows = () => {
     return rows.filter((row) => {
       switch (selectedFilter) {
@@ -310,7 +309,7 @@ export default function Home() {
               <Timer
                 rowId={id}
                 setRows={setRows}
-                selectedTask={selectedTask}
+                selectedTask={selectedTask as Task}
                 duration={selectedTask?.duration}
                 minutes={remainingMinutes}
                 handleStart={onHandleChangeStatusTask}
@@ -348,18 +347,7 @@ export default function Home() {
                 sx={{ borderRadius: "12px", height: "500px" }}
               >
                 <DataGrid
-                  rows={rows.filter((row) => {
-                    switch (selectedFilter) {
-                      case "SHORT":
-                        return row.duration < 30;
-                      case "MEDIUM":
-                        return row.duration > 30 || row.duration === 60;
-                      case "HIGH":
-                        return true;
-                      default:
-                        return true;
-                    }
-                  })}
+                  rows={handleFilteredRows()}
                   columns={columns}
                   editMode="row"
                   rowModesModel={rowModesModel}

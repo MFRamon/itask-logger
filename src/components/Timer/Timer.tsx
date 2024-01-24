@@ -1,14 +1,18 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Grid, Paper, Typography, Button } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
+import { Task } from "@/pages";
 
 interface ITimerPropos {
-  duration: any;
-  handleStart: () => void;
-  handlePause: () => void;
-  handleFinish: () => void;
-  handleReset: () => void;
+  duration: number;
+  handleStart: (status: string, minutes: number) => void;
+  handlePause: (status: string, minutes: number) => void;
+  handleFinish: (status: string, minutes: number) => void;
+  handleReset: (status: string, minutes: number) => void;
   minutes: number;
+  setRows: (rows: any) => void;
+  rowId: number;
+  selectedTask: Task;
 }
 
 export const STATUSES = {
@@ -19,7 +23,7 @@ export const STATUSES = {
   FINISHED: "FINISHED",
 };
 
-const Timer = (props: any) => {
+const Timer = (props: ITimerPropos) => {
   const {
     duration,
     handleStart,
@@ -61,7 +65,6 @@ const Timer = (props: any) => {
       const interval = setInterval(() => {
         if (seconds === 0 && minutes !== 0) {
           setSeconds((seconds) => seconds + 59);
-          // setMinutes((minutes: number) => minutes - 1);
           setRows((rows: any) => {
             const newRows = [...rows];
 
@@ -100,20 +103,6 @@ const Timer = (props: any) => {
   const remainingMinutes = minutes < 10 ? "0" + minutes : minutes;
   const timerMinutes =
     selectedTask?.status === STATUSES.RESET ? duration : remainingMinutes;
-
-  /*
-  const sec = 60 - seconds;
-  let min = duration - remainingMinutes
-
-  if (sec !== 0) {
-    min -= 1;
-  }*/
-
-  // Cuando se edita la duracion que se actualice el tiempo restante
-
-  // Al borrar una task que se inicialice el reloj a cero
-  // Al cambiar de task seleccionada que se inicialice el reloj al tiempo restante o la duracion
-  // Si se cambia el status a finished que se guarde el tiempo que le tomo si la empezo o si no que se le deje terminarla
 
   return (
     <Fragment>
