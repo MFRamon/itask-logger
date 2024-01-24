@@ -62,9 +62,19 @@ In this application the functionalities that the user can do are the following :
 - Support dark mode based on the user's OS settings.
 - The responsiveness is preserved across devices.
 
-## Responsiveness on Different devices.
+## Responsiveness on different devices.
 
-![Alt text](public/laptop.png "Laptop:")
+# Laptop
+
+![Laptop visual](public/laptop.png)
+
+# Ipad
+
+![Ipad visual](public/ipad.png)
+
+# Mobile
+
+![Mobile visual](public/mobile.png)
 
 ## Learn More
 
