@@ -1,28 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Logger.
 
-## Getting Started
+This is a project that manages your daily tasks and gives you access to how much time have you used and how many time have you spent on them. It also provides a chart where you can visually track the progress of the last week.
 
-First, run the development server:
+# Tech Stack.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Dependency title | Version |
+| ---------------- | ------- |
+| next             | 14.0.4  |
+| react            | 18      |
+| eslint           | 8       |
+| prettier         | 3.2.4   |
+| typescript       | 5       |
+| mui/material     | 5.15.4  |
+
+## Install process and scripts.
+
+Install dependencies :
+
+    npm run install
+
+Run the dev server :
+
+    npm run dev
+
+Get a list of files that need formatting :
+
+    npm run format
+
+Format all the files that needed formatting :
+
+    npm run format:fix
+
+Run the unit tests :
+
+    npm run format:fix
+
+## File Structure.
+
+```
+| Directory     | Content
+| ------------- | -------------
+| components    | Components that are used in parent compoentns
+| helpers       | Functions that are used across different files
+| pages         | Components that act as the pages in the application
+| styles        | Global styles, mixins, themes are places here
+| tests         | Unit tests for components
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Application's functionalities.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+In this application the functionalities that the user can do are the following :
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- Create a task.
+- Update the description and duration of the task.
+- Delete a task.
+- Reorder the list of tasks by description, duration or status.
+- Start, pause, resume and finish the timer for a given task.
+- See a list of finished tasks.
+- Check a graphic of the finished tasks in the last week.
+- Filter the set of tasks by their duration (Short, Medium, and High).
+- Support dark mode based on the user's OS settings.
+- The responsiveness is preserved across devices.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Design inspiration and concept
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+When I started working on the idea of how I would love to see the project in real life I used the Freeform to create a basic skeleton mockup so I can stablish the visual idea that I wanted to focus.
+This is how it looked in the begining.
+
+![Initial mockup](public/mockup.png)
+
+# Responsiveness on different devices.
+
+## Laptop
+
+![Laptop visual](public/laptop.png)
+
+## Tablet
+
+![Ipad visual](public/ipad.png)
+
+## Mobile
+
+![Mobile visual](public/mobile.png)
 
 ## Learn More
 
