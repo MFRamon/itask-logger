@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  transpilePackages: ["@mui/x-charts"],
+  // transpilePackages: ["@mui/x-charts"],
 };
 
 module.exports = nextConfig;
