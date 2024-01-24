@@ -64,21 +64,18 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
           alignItems="center"
           gap={3}
         >
-          {/* Header for container */}
           <Grid item id={"finished-tasks-title"} alignSelf={"flex-start"}>
             <Typography variant="h5" gutterBottom>
               Finished Tasks
             </Typography>
           </Grid>
 
-          {/* Chart for Data */}
           <Grid item>
             <Paper
               id={"paper-containe-chart"}
               className={styles.chart}
               elevation={0}
             >
-              {/* Line Chart for Finished Tasks */}
               <Grid item>
                 <LineChart
                   width={300}
@@ -90,7 +87,6 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
             </Paper>
           </Grid>
 
-          {/* TODO: Check Hydration */}
           {domLoaded && (
             <Grid
               item
