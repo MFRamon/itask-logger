@@ -188,7 +188,6 @@ const Timer = (props: any) => {
               </Button>
             </Grid>
           </Grid>
-          
         </Grid>
       </Paper>
     </Fragment>

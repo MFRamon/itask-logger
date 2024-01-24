@@ -1,8 +1,8 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import React, { Fragment } from "react";
 import styles from "@/components/SelectedTaskDetail/SelectedTaskDetail.module.css";
-import { Chip } from '@mui/material';
-import ClearIcon from '@mui/icons-material/Clear';
+import { Chip } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 
 interface ITasksCountProps {
   title: string;
@@ -30,19 +30,34 @@ const TasksFilters = (props: ITasksCountProps) => {
 
   return (
     <Fragment>
-      <Paper elevation={0} className={styles.itemContainer}  sx={{ height: "142px", minHeight: "142px" }}>
-        <Grid container direction={"column"} sx={{ minHeight: "105px" }} justifyContent={"space-between"}>
-
+      <Paper
+        elevation={0}
+        className={styles.itemContainer}
+        sx={{ height: "142px", minHeight: "142px" }}
+      >
+        <Grid
+          container
+          direction={"column"}
+          sx={{ minHeight: "105px" }}
+          justifyContent={"space-between"}
+        >
           <Grid item>
             <Typography variant="h6">{title}</Typography>
           </Grid>
 
           <Grid item>
-            <Typography variant="body1" gutterBottom>{"Filter the tasks by their duration"}</Typography>
+            <Typography variant="body1" gutterBottom>
+              {"Filter the tasks by their duration"}
+            </Typography>
           </Grid>
 
           <Grid item>
-            <Grid container direction={"row"}  gap={1} justifyContent={"flex-start"}>
+            <Grid
+              container
+              direction={"row"}
+              gap={1}
+              justifyContent={"flex-start"}
+            >
               <Grid item>
                 <Chip
                   sx={{ borderRadius: "8px" }}
@@ -69,16 +84,13 @@ const TasksFilters = (props: ITasksCountProps) => {
                   sx={{ borderRadius: "8px" }}
                   label={"Reset"}
                   color="error"
-                  icon={<ClearIcon/>}
+                  icon={<ClearIcon />}
                   onClick={handleResetFilter}
                 />
               </Grid>
             </Grid>
           </Grid>
-
-
         </Grid>
-
       </Paper>
     </Fragment>
   );

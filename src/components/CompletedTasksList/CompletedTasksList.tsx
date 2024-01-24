@@ -1,15 +1,19 @@
 import React, { Fragment, useEffect, useState } from "react";
-import {Typography, Paper, Grid, List, ListItem, Divider, ListItemText, Chip  } from "@mui/material";
+import {
+  Typography,
+  Paper,
+  Grid,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  Chip,
+} from "@mui/material";
 import { GridRowsProp } from "@mui/x-data-grid";
 import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "@/components/CompletedTasksList/CompletedTasksList.module.css";
 
-
-import {
-  randomTraderName,
-  randomArrayItem,
-} from "@mui/x-data-grid-generator";
-
+import { randomTraderName, randomArrayItem } from "@mui/x-data-grid-generator";
 
 const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
 
@@ -21,16 +25,17 @@ interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
 }
 
-
 const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   const [domLoaded, setDomLoaded] = useState(false);
-  
-  const { completedTasks  } = props;
 
-  const dates = (startDate: Date, num: number) => Array.from(
-    { length: num },
-    (_, i) =>  new Date(startDate.getTime() + (i * 60000 * 60 * 24)).toISOString().slice(8, 10)
-  );
+  const { completedTasks } = props;
+
+  const dates = (startDate: Date, num: number) =>
+    Array.from({ length: num }, (_, i) =>
+      new Date(startDate.getTime() + i * 60000 * 60 * 24)
+        .toISOString()
+        .slice(8, 10),
+    );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCountOfFinishedTasks = () => {
@@ -40,15 +45,15 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
 
     const finalDatesArray: any = new Array(weekDays.length).fill(0);
     completedTasks.forEach((task) => {
-        weekDays.forEach((day, index) => {
-          if (task.finishedDate.toISOString().slice(8, 10) === day) {
-              finalDatesArray[index] += 1;
-          }
-        })
-    })
-    
-    return [weekDays, finalDatesArray]
-  }
+      weekDays.forEach((day, index) => {
+        if (task.finishedDate.toISOString().slice(8, 10) === day) {
+          finalDatesArray[index] += 1;
+        }
+      });
+    });
+
+    return [weekDays, finalDatesArray];
+  };
 
   const [weekDays, finalDatesArray] = getCountOfFinishedTasks();
 
@@ -58,10 +63,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
 
   return (
     <Fragment>
-      <Paper
-        className={styles.cardContainer}
-        elevation={0}
-      >
+      <Paper className={styles.cardContainer} elevation={0}>
         <Grid
           container
           direction="column"
@@ -77,7 +79,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
           </Grid>
 
           {/* Chart for Data */}
-          <Grid item >
+          <Grid item>
             <Paper
               id={"paper-containe-chart"}
               className={styles.chart}
@@ -85,13 +87,11 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
             >
               {/* Line Chart for Finished Tasks */}
               <Grid item>
-              <LineChart
+                <LineChart
                   width={300}
                   height={300}
-                  series={[
-                    { data: finalDatesArray, label: 'Finished Tasks' },
-                  ]}
-                  xAxis={[{ scaleType: 'point', data: weekDays }]}
+                  series={[{ data: finalDatesArray, label: "Finished Tasks" }]}
+                  xAxis={[{ scaleType: "point", data: weekDays }]}
                 />
               </Grid>
             </Paper>
@@ -109,7 +109,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
               }}
             >
               <List
-              key={2}
+                key={2}
                 sx={{
                   overflow: "auto",
                   maxHeight: 200,
@@ -138,7 +138,9 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
                         <Grid container flexDirection={"row"}>
                           <ListItemText
                             primary={`${task.completedTime} minutes`}
-                            secondary={task.finishedDate.toISOString().slice(0, 10)}
+                            secondary={task.finishedDate
+                              .toISOString()
+                              .slice(0, 10)}
                           />
                         </Grid>
                       </Grid>

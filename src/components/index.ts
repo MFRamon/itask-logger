@@ -7,11 +7,11 @@ import TasksTableToolbar from "./TasksTableToolbar/TasksTableToolbar";
 import Timer from "./Timer/Timer";
 
 export {
-    CompletedTasksList,
-    LogoHeader,
-    MetaHead,
-    SelectedTaskDetail,
-    TasksFilters,
-    TasksTableToolbar,
-    Timer
-}
+  CompletedTasksList,
+  LogoHeader,
+  MetaHead,
+  SelectedTaskDetail,
+  TasksFilters,
+  TasksTableToolbar,
+  Timer,
+};

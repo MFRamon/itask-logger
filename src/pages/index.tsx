@@ -16,10 +16,7 @@ import {
   GridRowModel,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
-import {
-  randomTraderName,
-  randomId,
-} from "@mui/x-data-grid-generator";
+import { randomTraderName, randomId } from "@mui/x-data-grid-generator";
 import { Task } from "@mui/icons-material";
 import Paper from "@mui/material/Paper";
 import CompletedTasksList from "@/components/CompletedTasksList/CompletedTasksList";
@@ -29,7 +26,7 @@ import { Grid } from "@mui/material";
 import Timer, { STATUSES } from "@/components/Timer/Timer";
 import SelectedTaskDetail from "@/components/SelectedTaskDetail/SelectedTaskDetail";
 import TasksTableToolbar from "@/components/TasksTableToolbar/TasksTableToolbar";
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 import TasksFilters from "@/components/TasksFilters/TasksFilters";
 
 export interface Task {
@@ -166,7 +163,7 @@ export default function Home() {
       headerName: "Description",
       width: 180,
       editable: true,
-      flex: 1 
+      flex: 1,
     },
     {
       field: "duration",
@@ -176,7 +173,7 @@ export default function Home() {
       align: "left",
       headerAlign: "left",
       editable: true,
-      flex: 1
+      flex: 1,
     },
     {
       field: "status",
@@ -185,7 +182,7 @@ export default function Home() {
       editable: true,
       type: "singleSelect",
       valueOptions: ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"],
-      flex: 1
+      flex: 1,
     },
     {
       field: "actions",
@@ -267,7 +264,6 @@ export default function Home() {
     setRows(modifiedTasks);
   };
 
-
   //TODO: To check usage in readonly data
   const handleFilteredRows = () => {
     return rows.filter((row) => {
@@ -281,26 +277,29 @@ export default function Home() {
         default:
           return true;
       }
-    })
-  }
+    });
+  };
 
   return (
     <>
       <MetaHead title={"Dashboard"}></MetaHead>
-      <Box className={styles.main} 
-        pr={{xl: 20, lg: 15, md: 10, sm: 2, xs: 2 }}
-        pl={{xl: 20, lg: 15, md: 10, sm: 2, xs: 2 }}
-        mt={{sm: 10, xs: 15}}
-        >
-
+      <Box
+        className={styles.main}
+        pr={{ xl: 20, lg: 15, md: 10, sm: 2, xs: 2 }}
+        pl={{ xl: 20, lg: 15, md: 10, sm: 2, xs: 2 }}
+        mt={{ sm: 10, xs: 15 }}
+      >
         <Box className={styles.header}>
           <LogoHeader></LogoHeader>
         </Box>
 
-        <Box id="subheader-container" className={styles.subheader} 
-        mt={{xs: 0, sm: 0, lg: 0, xl: 0}} 
-        pb={{xs: 5, sm: 5}}>
-          <Grid container spacing={2} padding={{xs: 2}}>
+        <Box
+          id="subheader-container"
+          className={styles.subheader}
+          mt={{ xs: 0, sm: 0, lg: 0, xl: 0 }}
+          pb={{ xs: 5, sm: 5 }}
+        >
+          <Grid container spacing={2} padding={{ xs: 2 }}>
             <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
               <SelectedTaskDetail
                 task={selectedTask as Task}
@@ -322,18 +321,32 @@ export default function Home() {
             </Grid>
 
             <Grid item xl={3} lg={4} md={4} sm={12} xs={12}>
-              <TasksFilters setSelectedFilter={setSelectedFilter} title="Filters:" ></TasksFilters>
+              <TasksFilters
+                setSelectedFilter={setSelectedFilter}
+                title="Filters:"
+              ></TasksFilters>
             </Grid>
           </Grid>
         </Box>
 
-        <Box id={"content-container"} className={styles.content} 
-        mt={{xs: 0, sm: 0, lg: 0, xl: 0}}
-        pb={{xs: 5, sm: 5}}
-        pt={{xs: 8, lg: 0}}>
-          <Grid container spacing={2} padding={{xs: 2}} sx={{minHeight: '500px'}}>
+        <Box
+          id={"content-container"}
+          className={styles.content}
+          mt={{ xs: 0, sm: 0, lg: 0, xl: 0 }}
+          pb={{ xs: 5, sm: 5 }}
+          pt={{ xs: 8, lg: 0 }}
+        >
+          <Grid
+            container
+            spacing={2}
+            padding={{ xs: 2 }}
+            sx={{ minHeight: "500px" }}
+          >
             <Grid item xs={12} sm={12} md={6} lg={7} xl={6}>
-              <Paper elevation={0} sx={{ borderRadius: "12px", height: "500px" }}>
+              <Paper
+                elevation={0}
+                sx={{ borderRadius: "12px", height: "500px" }}
+              >
                 <DataGrid
                   rows={rows.filter((row) => {
                     switch (selectedFilter) {

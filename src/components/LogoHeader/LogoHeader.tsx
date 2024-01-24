@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import { Grid, Typography} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { getTodaysDate } from "@/helpers";
 
-const LogoHeader = () =>  {
+const LogoHeader = () => {
   return (
     <Fragment>
       <Grid
@@ -10,7 +10,7 @@ const LogoHeader = () =>  {
         direction={"row"}
         justifyContent={"space-between"}
         alignItems="center"
-        padding={{xs: 2}}
+        padding={{ xs: 2 }}
         data-testid={"logo-header"}
       >
         {/* <Grid item>
@@ -26,7 +26,9 @@ const LogoHeader = () =>  {
         <Grid item>
           <Grid container direction={"column"}>
             <Grid item>
-              <Typography variant="body1" data-testid={"logo-header-date"}>{getTodaysDate()}</Typography>
+              <Typography variant="body1" data-testid={"logo-header-date"}>
+                {getTodaysDate()}
+              </Typography>
             </Grid>
 
             <Grid item>
@@ -36,7 +38,9 @@ const LogoHeader = () =>  {
             </Grid>
 
             <Grid item>
-              <Typography variant="body1" data-testid={"logo-header-author"}>Created By Ramon Manrique</Typography>
+              <Typography variant="body1" data-testid={"logo-header-author"}>
+                Created By Ramon Manrique
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

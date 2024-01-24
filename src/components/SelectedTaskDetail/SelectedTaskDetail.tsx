@@ -21,24 +21,43 @@ const SelectedTaskDetail = (props: ISelectedTaskDetailProps) => {
         <Grid container direction={"column"}>
           {props.task ? (
             <Fragment>
-              <Typography variant="h6" data-testid="header-title">Selected Task:</Typography>
+              <Typography variant="h6" data-testid="header-title">
+                Selected Task:
+              </Typography>
               <Grid item>
-                <Typography variant="body1" data-testid={`task-${id}-description`}>{`Description: ${description}`}</Typography>
+                <Typography
+                  variant="body1"
+                  data-testid={`task-${id}-description`}
+                >{`Description: ${description}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1" data-testid={`task-${id}-status`}>{`Status: ${status}`}</Typography>
+                <Typography
+                  variant="body1"
+                  data-testid={`task-${id}-status`}
+                >{`Status: ${status}`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1" data-testid={`task-${id}-duration`}>{`Duration:  ${duration} minutes`}</Typography>
+                <Typography
+                  variant="body1"
+                  data-testid={`task-${id}-duration`}
+                >{`Duration:  ${duration} minutes`}</Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body1" data-testid={`task-${id}-remaining-time`}>{`Remaining minutes: ${timeToFinish}`}</Typography>
+                <Typography
+                  variant="body1"
+                  data-testid={`task-${id}-remaining-time`}
+                >{`Remaining minutes: ${timeToFinish}`}</Typography>
               </Grid>
             </Fragment>
           ) : (
             <Fragment>
               <Grid item>
-                <Typography variant="body1" data-testid={`selected-task-placeholder`}>{"No task selected"}</Typography>
+                <Typography
+                  variant="body1"
+                  data-testid={`selected-task-placeholder`}
+                >
+                  {"No task selected"}
+                </Typography>
               </Grid>
             </Fragment>
           )}
