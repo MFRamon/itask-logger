@@ -288,14 +288,14 @@ export default function Home() {
         pl={{ xl: 20, lg: 15, md: 10, sm: 2, xs: 2 }}
         mt={{ sm: 10, xs: 15 }}
       >
-        <Box className={styles.header}>
+        <Box className={styles.header} >
           <LogoHeader></LogoHeader>
         </Box>
 
         <Box
           id="subheader-container"
           className={styles.subheader}
-          mt={{ xs: 0, sm: 0, lg: 0, xl: 0 }}
+          mt={{ xs: 30, sm: 0, lg: 0, xl: 0 }}
           pb={{ xs: 5, sm: 5 }}
         >
           <Grid container spacing={2} padding={{ xs: 2 }}>
@@ -331,9 +331,9 @@ export default function Home() {
         <Box
           id={"content-container"}
           className={styles.content}
-          mt={{ xs: 0, sm: 0, lg: 0, xl: 0 }}
+          mt={{ xs: 10, sm: 0, lg: 0, xl: 0 }}
           pb={{ xs: 5, sm: 5 }}
-          pt={{ xs: 8, lg: 0 }}
+          pt={{ xs: 8, md: 0, lg: 0, xl: 0 }}
         >
           <Grid
             container

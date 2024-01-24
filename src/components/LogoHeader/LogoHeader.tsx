@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Grid, Typography } from "@mui/material";
 import { getTodaysDate } from "@/helpers";
+import Image from "next/image";
 
 const LogoHeader = () => {
   return (
@@ -13,15 +14,15 @@ const LogoHeader = () => {
         padding={{ xs: 2 }}
         data-testid={"logo-header"}
       >
-        {/* <Grid item>
+        <Grid item>
           <Image
-            src="/memoji.svg"
-            alt="Next.js Logo"
+            src="/memoji.png"
+            alt="Ramon Memoji"
             width={200}
             height={200}
             priority
           />
-        </Grid> */}
+        </Grid>
 
         <Grid item>
           <Grid container direction={"column"}>
