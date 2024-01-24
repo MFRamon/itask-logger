@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
-import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
+import { Grid, Typography} from "@mui/material";
 import { getTodaysDate } from "@/helpers";
 
 const LogoHeader = () =>  {

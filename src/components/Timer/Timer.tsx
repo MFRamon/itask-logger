@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useState, useCallback } from "react";
-import Button from "@mui/material/Button";
-import { Grid, Paper, Typography } from "@mui/material";
+import React, { Fragment, useEffect, useState } from "react";
+import { Grid, Paper, Typography, Button } from "@mui/material";
 import styles from "@/components/Timer/Timer.module.css";
 
 interface ITimerPropos {

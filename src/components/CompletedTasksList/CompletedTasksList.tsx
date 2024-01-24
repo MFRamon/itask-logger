@@ -1,15 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import {Typography, Paper, Grid, List, ListItem, Divider, ListItemText, Chip  } from "@mui/material";
 import { GridRowsProp } from "@mui/x-data-grid";
-import Grid from "@mui/material/Grid";
 import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "@/components/CompletedTasksList/CompletedTasksList.module.css";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import Chip from "@mui/material/Chip";
+
 
 import {
   randomTraderName,
