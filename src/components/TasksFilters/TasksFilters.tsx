@@ -6,26 +6,34 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 interface ITasksCountProps {
   title: string;
-  setSelectedFilter: (filterName: string) => void;
+  setSelectedFilter?: (filterName: string) => void;
 }
 
 const TasksFilters = (props: ITasksCountProps) => {
   const { title, setSelectedFilter } = props || {};
 
   const handleShortDurationFilter = () => {
-    setSelectedFilter("SHORT");
+    if(setSelectedFilter){
+      setSelectedFilter("SHORT");
+    }
   };
 
   const handleMediumDurationFilter = () => {
-    setSelectedFilter("MEDIUM");
+    if(setSelectedFilter){
+      setSelectedFilter("MEDIUM");
+    }
   };
 
   const handleHighDurationFilter = () => {
-    setSelectedFilter("HIGH");
+    if(setSelectedFilter){
+      setSelectedFilter("HIGH");
+    }
   };
 
   const handleResetFilter = () => {
-    setSelectedFilter("NONE");
+    if(setSelectedFilter){
+      setSelectedFilter("NONE");
+    }
   };
 
   return (
@@ -34,6 +42,7 @@ const TasksFilters = (props: ITasksCountProps) => {
         elevation={0}
         className={styles.itemContainer}
         sx={{ height: "142px", minHeight: "142px" }}
+        data-testid={"tasks-filters"}
       >
         <Grid
           container
@@ -42,11 +51,11 @@ const TasksFilters = (props: ITasksCountProps) => {
           justifyContent={"space-between"}
         >
           <Grid item>
-            <Typography variant="h6">{title}</Typography>
+            <Typography data-testid={"test-filters-title"} variant="h6">{title}</Typography>
           </Grid>
 
           <Grid item>
-            <Typography variant="body1" gutterBottom>
+            <Typography variant="body1" gutterBottom data-testid={"test-filters-subtitle"}>
               {"Filter the tasks by their duration"}
             </Typography>
           </Grid>

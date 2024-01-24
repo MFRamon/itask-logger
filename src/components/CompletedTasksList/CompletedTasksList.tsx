@@ -13,13 +13,6 @@ import { GridRowsProp } from "@mui/x-data-grid";
 import { LineChart } from "@mui/x-charts/LineChart";
 import styles from "@/components/CompletedTasksList/CompletedTasksList.module.css";
 
-import { randomTraderName, randomArrayItem } from "@mui/x-data-grid-generator";
-
-const roles = ["PENDING", "IN-PROGRESS", "STOPPED", "FINISHED"];
-
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
 
 interface ICompletedTasksTableProps {
   completedTasks: GridRowsProp;
@@ -35,7 +28,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
       new Date(startDate.getTime() + i * 60000 * 60 * 24)
         .toISOString()
         .slice(8, 10),
-    );
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCountOfFinishedTasks = () => {
