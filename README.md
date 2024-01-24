@@ -62,7 +62,7 @@ In this application the functionalities that the user can do are the following :
 - Support dark mode based on the user's OS settings.
 - The responsiveness is preserved across devices.
 
-# Inspiration design from concept
+# Design inspiration and concept
 
 When I started working on the idea of how I would love to see the project in real life I used the Freeform to create a basic skeleton mockup so I can stablish the visual idea that I wanted to focus.
 This is how it looked in the begining.
