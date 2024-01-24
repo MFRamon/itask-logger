@@ -1,28 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Logger
 
-## Getting Started
+This is a project that manages your daily tasks and gives you access to how much time have you used and how many time have you spent on them. It also provides a chart where you can visually track the progress of the last week. 
 
-First, run the development server:
+# Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+| Dependency title | Version |
+|--|--|
+|next| 14.0.4 |
+|react| 18 |
+|eslint| 8 |
+|prettier|3.2.4|
+|typescript| 5 |
+|mui/material| 5.15.4|
+
+
+## Install process and scripts 
+
+Install dependencies : 
+
+    npm run install
+    
+Run the dev server : 
+
+    npm run dev
+
+Get a list of files that need formatting : 
+
+    npm run format
+
+Format all the files that needed formatting : 
+
+    npm run format:fix
+    
+Run the unit tests : 
+
+    npm run format:fix
+
+
+## File Structure
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Directory     | Content       
+| ------------- | ------------- 
+| components    | Components that are used in parent compoentns  
+| helpers       | Functions that are used across different files  
+| pages         | Components that act as the pages in the application 
+| styles        | Global styles, mixins, themes are places here
+| tests         | Unit tests for components  
+```
 
 ## Learn More
 
