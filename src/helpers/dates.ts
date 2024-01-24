@@ -1,5 +1,5 @@
 const getTodaysDate = () => {
-  const f = new Intl.DateTimeFormat("es-MX", {
+  const f = new Intl.DateTimeFormat("us-US", {
     dateStyle: "full",
   });
   const formattedDate = f.format(new Date());

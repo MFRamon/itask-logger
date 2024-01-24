@@ -1,8 +1,8 @@
-# Task Logger
+# Task Logger.
 
 This is a project that manages your daily tasks and gives you access to how much time have you used and how many time have you spent on them. It also provides a chart where you can visually track the progress of the last week.
 
-# Tech Stack
+# Tech Stack.
 
 | Dependency title | Version |
 | ---------------- | ------- |
@@ -13,7 +13,7 @@ This is a project that manages your daily tasks and gives you access to how much
 | typescript       | 5       |
 | mui/material     | 5.15.4  |
 
-## Install process and scripts
+## Install process and scripts.
 
 Install dependencies :
 
@@ -35,7 +35,7 @@ Run the unit tests :
 
     npm run format:fix
 
-## File Structure
+## File Structure.
 
 ```
 | Directory     | Content
@@ -47,7 +47,7 @@ Run the unit tests :
 | tests         | Unit tests for components
 ```
 
-## Application's functionalities
+## Application's functionalities.
 
 In this application the functionalities that the user can do are the following :
 
@@ -61,6 +61,10 @@ In this application the functionalities that the user can do are the following :
 - Filter the set of tasks by their duration (Short, Medium, and High).
 - Support dark mode based on the user's OS settings.
 - The responsiveness is preserved across devices.
+
+## Responsiveness on Different devices.
+
+![Alt text](public/laptop.png "Laptop:")
 
 ## Learn More
 

@@ -40,7 +40,7 @@ export interface Task {
 const initialRows: GridRowsProp = [
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Wash dishes",
     duration: 25,
     status: "PENDING",
     timeToFinish: 25,
@@ -50,7 +50,7 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Wash clothes",
     duration: 69,
     status: "FINISHED",
     timeToFinish: 36,
@@ -60,7 +60,7 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Buy medicine",
     duration: 25,
     status: "PENDING",
     timeToFinish: 25,
@@ -70,7 +70,7 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Go visit grandpa",
     duration: 78,
     status: "FINISHED",
     timeToFinish: 36,
@@ -80,7 +80,7 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: "Ramon",
+    description: "Clean room",
     duration: 25,
     status: "FINISHED",
     timeToFinish: 25,
@@ -90,7 +90,7 @@ const initialRows: GridRowsProp = [
   },
   {
     id: randomId(),
-    description: randomTraderName(),
+    description: "Buy food",
     duration: 36,
     status: "FINISHED",
     timeToFinish: 36,
