@@ -1,18 +1,9 @@
 import React, { Fragment } from "react";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
-
+import { getTodaysDate } from "@/helpers";
 
 const LogoHeader = () =>  {
-
-  const getTodaysDate = () => {
-    const f = new Intl.DateTimeFormat('es-MX',{
-      dateStyle: 'full'
-    })
-    const formattedDate = f.format(new Date());
-    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-  }
-
   return (
     <Fragment>
       <Grid
@@ -21,6 +12,7 @@ const LogoHeader = () =>  {
         justifyContent={"space-between"}
         alignItems="center"
         padding={{xs: 2}}
+        data-testid={"logo-header"}
       >
         {/* <Grid item>
           <Image
@@ -35,17 +27,17 @@ const LogoHeader = () =>  {
         <Grid item>
           <Grid container direction={"column"}>
             <Grid item>
-              <Typography variant="body1">{getTodaysDate()}</Typography>
+              <Typography variant="body1" data-testid={"logo-header-date"}>{getTodaysDate()}</Typography>
             </Grid>
 
             <Grid item>
-              <Typography variant="body1">
+              <Typography variant="body1" data-testid={"logo-header-email"}>
                 {"ramon.manfig@gmail.com"}
               </Typography>
             </Grid>
 
             <Grid item>
-              <Typography variant="body1" data-testId="">Created By Ramon Manrique</Typography>
+              <Typography variant="body1" data-testid={"logo-header-author"}>Created By Ramon Manrique</Typography>
             </Grid>
           </Grid>
         </Grid>

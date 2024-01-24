@@ -1,18 +1,11 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useGridApiContext } from "@mui/x-data-grid";
-import { useDemoData, randomId } from "@mui/x-data-grid-generator";
+import { randomId } from "@mui/x-data-grid-generator";
 import {
   GridRowsProp,
   GridRowModesModel,
   GridRowModes,
-  DataGrid,
-  GridColDef,
   GridToolbarContainer,
-  GridActionsCellItem,
-  GridEventListener,
-  GridRowId,
   GridRowModel,
 } from "@mui/x-data-grid";
 
@@ -27,8 +20,6 @@ interface EditToolbarProps {
 
 const TasksTableToolbar = (props: EditToolbarProps) => {
   const { setRows, setRowModesModel, rows, setSelectedFilter } = props;
-
-  const apiRef = useGridApiContext();
 
   const handleClick = () => {
     const id = randomId();
