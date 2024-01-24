@@ -68,7 +68,7 @@ In this application the functionalities that the user can do are the following :
 
 ![Laptop visual](public/laptop.png)
 
-# Ipad
+# Tablet
 
 ![Ipad visual](public/ipad.png)
 
