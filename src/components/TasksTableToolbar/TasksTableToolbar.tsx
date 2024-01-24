@@ -6,7 +6,6 @@ import {
   GridRowModesModel,
   GridRowModes,
   GridToolbarContainer,
-  GridRowModel,
 } from "@mui/x-data-grid";
 
 interface EditToolbarProps {
@@ -14,12 +13,10 @@ interface EditToolbarProps {
   setRowModesModel: (
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel,
   ) => void;
-  rows: GridRowModel;
-  setSelectedFilter: (filterName: string) => void;
 }
 
 const TasksTableToolbar = (props: EditToolbarProps) => {
-  const { setRows, setRowModesModel, rows, setSelectedFilter } = props;
+  const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
     const id: any = randomId();
