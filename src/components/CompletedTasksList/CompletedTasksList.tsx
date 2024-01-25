@@ -33,7 +33,7 @@ const CompletedTasksList = (props: ICompletedTasksTableProps) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCountOfFinishedTasks = () => {
     let date = new Date();
-    date.setDate(date.getDate() - date.getDay() - 6);
+    date.setDate(date.getDate() - 7);
     const weekDays = dates(date, 7);
 
     const finalDatesArray: any = new Array(weekDays.length).fill(0);

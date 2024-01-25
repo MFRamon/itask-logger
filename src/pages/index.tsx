@@ -144,7 +144,7 @@ export default function Home() {
   };
 
   const processRowUpdate = (newRow: GridRowModel) => {
-    const updatedRow = { ...newRow, isNew: false };
+    const updatedRow = { ...newRow, isNew: false, timeToFinish: newRow.duration };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     return updatedRow;
   };
@@ -282,7 +282,7 @@ export default function Home() {
         case "MEDIUM":
           return row.duration > 30 || row.duration === 60;
         case "HIGH":
-          return true;
+          return row.duration > 60;
         default:
           return true;
       }
