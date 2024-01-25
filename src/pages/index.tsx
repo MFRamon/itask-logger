@@ -15,6 +15,7 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
+  GridEditInputCell
 } from "@mui/x-data-grid";
 import { randomTraderName, randomId } from "@mui/x-data-grid-generator";
 import { Task } from "@mui/icons-material";
@@ -169,6 +170,15 @@ export default function Home() {
       field: "duration",
       headerName: "Duration (mins)",
       type: "number",
+      renderEditCell: (params) => (
+        <GridEditInputCell
+          {...params}
+          inputProps={{
+            max: 120,
+            min: 1,
+          }}
+        />
+      ),
       width: 80,
       align: "left",
       headerAlign: "left",
